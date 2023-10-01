@@ -1,0 +1,28 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+header{
+    min-height: 10vh;
+}
+main{
+    min-height: 70vh;
+}
+footer{
+    min-height: 15vh;
+    background-color: gainsboro;
+}
+
+.imgfooter{
+    height: 8vh;
+}
+.cards{
+    min-width: 35%;
+}
+.imgmain{
+    height:15vh;
+    object-fit:cover;
+    object-position:center;
+    
+}

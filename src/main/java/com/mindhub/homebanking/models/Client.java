@@ -7,9 +7,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity
+@Entity // persistence de dates JPA antes de this es  POJO, y crea una tabla en la BBDD con los datos de esta clase
 public class Client {
-     private String name, lastName, email;
+     private String name, lastName, email; // colum de la tabla de BBDD
      @Id
      @GeneratedValue (strategy = GenerationType.AUTO,generator="datoId")
      @GenericGenerator( name = "datoId", strategy = "native")

@@ -7,9 +7,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-@SpringBootApplication
+@SpringBootApplication //se le indica a la app q esta aplicacion trabaja con SpringBoot
 public class HomebankingApplication {
 
+	//método main punto de entrada de la aplicación. El punto por donde comienza
 	public static void main(String[] args) {
 		SpringApplication.run(HomebankingApplication.class, args);
 	}

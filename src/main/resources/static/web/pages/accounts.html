@@ -10,50 +10,79 @@
 </head>
 <body>
 <div id="app">
-<header>
-  <nav class="navbar navbar-expand bg-body-tertiary d-flex justify-content-center">
-    <div class="d-flex  ">
-      
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="nav nav-pills nav-fill">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Accounts</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="">Cards</a>
-          </li>         
-           
-          <li class="nav-item">
-            <a class="nav-link" href="">Loans</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="">Transactions</a>
-          </li>
-        </ul>
+  <header class="d-flex justify-content-around align-items-center ">
+    <div class="mx-5">
+      <img src="../images/LogoBank.png" alt="LogoBank"  height="50" class="d-inline-block align-text-top">
+    </div> 
+    <nav class="navbar navbar-expand d-flex justify-content-center">
+      <div class="d-flex  ">
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="nav nav-pills nav-fill">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Accounts</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="">Cards</a>
+            </li>         
+             
+            <li class="nav-item">
+              <a class="nav-link" href="">Loans</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="">Transactions</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+<main class="d-flex flex-column justify-content-center">
+  <div id="carouselExampleFade" class="carousel slide carousel-fade">
+    <div class="carousel-inner carrousel ">
+      <div class="carousel-item active">
+        <img src="../images/pexels-pixabay-164501.jpg" class="d-block w-100 imgcarrousel"  alt="crediCard">
+      </div>
+      <div class="carousel-item">
+        <img src="../images/pexels-oleksandr-p-7599735.jpg" class="d-block w-100 imgcarrousel" alt="keyHouse">
+      </div>
+      <div class="carousel-item">
+        <img src="../images/pexels-tima-miroshnichenko-4963087.jpg" class="d-block w-100 imgcarrousel" alt="buyCard">
+      </div>
+      <div class="carousel-item">
+        <img src="../images/pexels-hiếu-hoàng-1130000.jpg" class="d-block w-100 imgcarrousel" alt="vacation">
       </div>
     </div>
-  </nav>
-
-</header>
-<main class="d-flex flex-column justify-content-center">
-  <img src="../images/pexels-anna-shvets-4482900.jpg" class="imgmain mb-2">
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+  
   <div class="d-flex justify-content-center text-align-center mb-2">
-  <h2 >Bienvenida, {{dataClient.name +" " +dataClient.lastName}}!</h2>
+  <h1>Bienvenida, {{dataClient.name +" " +dataClient.lastName}}!</h1>
   </div>
-  <div class="d-flex justify-content-evenly" >
-  <div v-for="account of dataClient.accounts" class=" m-2 p-3 bg-info bg-opacity-10 border border-info border-start-0 rounded-end cards text-center">
-    <p>Número de cuenta:  {{account.number}}</p>
-    <p>Monto: </p>
-    <p class="text-center fs-3">${{account.balance.toLocaleString('de-DE',{  minimumFractionDigits: 2, maximumFractionDigits: 2 })}}</p>
-    <p>Fecha Apertura:   {{account.creationDate}}</p>
+  <div class="d-flex justify-content-center m-2">  
+  <div v-for="account of dataClient.accounts" class="card m-2" style="width: 18rem;">
+    <h5 class="card-header">Número de cuenta: {{account.number}}</h5>
+    <div class="card-body">
+      <h5 class="card-title">Monto:</h5>
+      <p class="card-text text-center">${{account.balance.toLocaleString('en-US',{  minimumFractionDigits: 2, maximumFractionDigits: 2 })}}</p>
+      <p class="card-text"> Fecha Apertura: {{account.creationDate}} </p>
+      <a v-bind:href="'./account.html?id='+account.id" class="card-link">More Info</a>
+    </div>
   </div>
   </div>
-    
+  
 
 </main>
 <footer class="d-flex flex-column align-items-center  justify-content-around ">
   <div class="d-flex align-items-center justify-content-center mt-3 w-25 ">
-    <p class= "fst-italic fs-5 tertiary text-center">HomeBanking 2023</p>
+    <p class= "fst-italic fs-5 text-primary text-center">HomeBanking 2023</p>
   </div>
   <div class="d-flex justify-content-center">
     <a class="m-2 " href="https://wa.me/+573024527869?text=Bienvenido!" target="_blank"><img src="../images/wsde.png" class="imgfooter" alt="link whatsapp" >

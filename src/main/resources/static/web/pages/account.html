@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your account</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+</head>
+<body>
+<div id="app">
+<header class="d-flex justify-content-around align-items-center ">
+  <div class="mx-5">
+    <img src="../images/LogoBank.png" alt="LogoBank"  height="50" class="d-inline-block align-text-top">
+  </div> 
+  <nav class="navbar navbar-expand d-flex justify-content-center">
+    <div class="d-flex  ">
+      
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="nav nav-pills nav-fill">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Accounts</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="">Cards</a>
+          </li>         
+           
+          <li class="nav-item">
+            <a class="nav-link" href="">Loans</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="">Transactions</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+</header>
+<main class="d-flex flex-column justify-content-center">
+  <div id="carouselExampleFade" class="carousel slide carousel-fade">
+    <div class="carousel-inner carrousel ">
+      <div class="carousel-item active">
+        <img src="../images/pexels-pixabay-164501.jpg" class="d-block w-100 imgcarrousel"  alt="crediCard">
+      </div>
+      <div class="carousel-item">
+        <img src="../images/pexels-oleksandr-p-7599735.jpg" class="d-block w-100 imgcarrousel" alt="keyHouse">
+      </div>
+      <div class="carousel-item">
+        <img src="../images/pexels-tima-miroshnichenko-4963087.jpg" class="d-block w-100 imgcarrousel" alt="buyCard">
+      </div>
+      <div class="carousel-item">
+        <img src="../images/pexels-hiếu-hoàng-1130000.jpg" class="d-block w-100 imgcarrousel" alt="vacation">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+ 
+  <div class="d-flex justify-content-center text-align-center mb-1">
+  <h3 >Tu cuenta seleccionada: </h3>
+  </div>
+  <div class="d-flex justify-content-center">  
+    <div class="card m-4" style="width: 18rem;">
+      <h5 class="card-header">Número de cuenta: {{dataAccount.number}}</h5>
+      <div class="card-body">
+        <h5 class="card-title">Monto:</h5>
+        <p class="text-center fs-3" v-if="dataAccount.balance!=null">${{dataAccount.balance.toLocaleString('en-US',{minimumFractionDigits: 2, maximumFractionDigits: 2 })}}</p>
+        <p class="card-text"> Fecha Apertura: {{dataAccount.creationDate}} </p>
+      </div>
+    </div>
+    </div>
+ 
+  <div class="d-flex flex-column justify-content-center align-items-center">
+
+    <h4>Transactions Resume: </h4>
+    <table  class="table w-75 mb-5">
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Amount</th>
+            <th >Date</th>
+            <th >Description</th>
+          </tr>
+        </thead>
+        <tbody>
+         
+          <tr v-for="transaction of dataAccount.transactions ">
+            <th :class="[ (transaction.type=='DEBITO' ? 'text-success' :'text-danger')]">{{transaction.type}}</th>
+            <td >{{transaction.amount.toLocaleString('en-US',{minimumFractionDigits:2, maximumFractionDigits:2})}}</td>
+            <td >{{new Date(transaction.date).toUTCString()}}</td>
+            <td>{{transaction.description}}</td>
+          </tr>
+         </tbody>
+      </table>
+  </div>
+    
+
+</main>
+<footer class="d-flex flex-column align-items-center  justify-content-around ">
+  <div class="d-flex align-items-center justify-content-center mt-3 w-25 ">
+    <p class="fst-italic fs-5 text-primary text-center">HomeBanking 2023</p>
+  </div>
+  <div class="d-flex justify-content-center">
+    <a class="m-2 " href="https://wa.me/+573024527869?text=Bienvenido!" target="_blank"><img src="../images/wsde.png" class="imgfooter" alt="link whatsapp" >
+    </a>
+    <a class="m-2 " href="https://www.facebook.com/groups/243471969040197" target="_blank"><img src="../images/fbde.png" class="imgfooter" alt="link de facebook" >
+    </a>
+    <a class="m-2 " href="https://www.twitter.com/" target="_blank"><img src="../images/twdes.png" class="imgfooter" alt="link twitter" >
+    </a>
+  </div>
+</footer>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> 
+<script src="../script/account.js"></script>
+</body>
+</html>

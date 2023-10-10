@@ -5,13 +5,24 @@
 }
 header{
     min-height: 10vh;
+    background-color:#112e34;
 }
+
 main{
     min-height: 70vh;
+    background-color: #caffff;
+}
+
+
+.imgcarrousel{
+    height: 60vh;
+    object-fit: cover;
+    object-position:center;
+    
 }
 footer{
     min-height: 15vh;
-    background-color: gainsboro;
+    background-color: #112e34;
 }
 
 .imgfooter{

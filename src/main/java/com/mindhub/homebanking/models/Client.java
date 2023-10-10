@@ -20,6 +20,7 @@ public class Client {
     public Client() {
 
     }
+
     public Client(String name, String lastName, String email) {
         this.name = name;
         this.lastName = lastName;
@@ -60,5 +61,8 @@ public class Client {
     public void addAccount(Account account){
         account.setClient(this);// el set asigna el valor de todo el obj mentor
         this.accounts.add(account);// similar al push JS
+    }
+
+    public void addTransaction(Transaction transaction) {
     }
 }

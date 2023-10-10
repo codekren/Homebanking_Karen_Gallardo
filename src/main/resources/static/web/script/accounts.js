@@ -4,6 +4,7 @@ createApp({
   data() {
     return {
       dataClient:{},
+      
     }
   },
   created(){
@@ -16,6 +17,7 @@ createApp({
       axios('http://localhost:8080/api/clients/1')
       .then(datos=> {
         this.dataClient=datos.data 
+
       })
       .catch(err=> console.log('error'))
   },

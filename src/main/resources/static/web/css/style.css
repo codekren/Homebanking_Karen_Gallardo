@@ -3,6 +3,9 @@
     padding:0;
     box-sizing: border-box;
 }
+[v-cloak]{
+    display:none;
+}
 header{
     min-height: 10vh;
     background-color:#112e34;

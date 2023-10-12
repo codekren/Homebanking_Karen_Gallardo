@@ -4,7 +4,9 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 public class Client {
@@ -15,8 +17,8 @@ public class Client {
      private Long  id;
      @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private Set<Account> accounts= new HashSet<>();// genera un espacio de referencia en memoria de la app
-
-
+    @OneToMany(mappedBy="clientLoan",fetch = FetchType.EAGER)
+    private Set<ClientLoan> clientLoans= new HashSet<>();
     public Client() {
 
     }
@@ -63,6 +65,8 @@ public class Client {
         this.accounts.add(account);// similar al push JS
     }
 
-    public void addTransaction(Transaction transaction) {
+
+    public List<ClientLoan> getLoans() {
+        return clientLoans.stream().collect(Collectors.toList());
     }
 }

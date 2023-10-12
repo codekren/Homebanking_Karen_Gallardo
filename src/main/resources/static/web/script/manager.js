@@ -18,8 +18,10 @@ createApp({
 
   methods:{
     loadData(){
-        axios('http://localhost:8080/api/clients')
-        .then(datos=> this.dataClient=datos.data )
+        axios.get('http://localhost:8080/api/clients')
+        .then(datos=>{
+          
+         this.dataClient=datos.data })
         .catch(err=> console.log('error'))
     },
     addClient(){
@@ -44,9 +46,9 @@ createApp({
 
     },
     postClient(){
-        axios.post('http://localhost:8080/clients', this.newClient)
+        axios.post('http://localhost:8080/api/clients', this.newClient)
         .then(response=> {
-            this.dataClient._embedded.clients.push(this.newClient)
+            this.dataClient.clients.push(this.newClient)
             this.loadData()
         })
         .catch(err=> console.log("error"))

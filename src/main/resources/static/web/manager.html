@@ -38,7 +38,7 @@
           <th class="p-0 fw-bold ">Last name</th>
           <th class="p-0  fw-bold">Email address</th>          
         </tr>
-        <tr v-for= "client of dataClient" class="text-center" >  
+        <tr v-for= "client of dataClient._embedded.clients" class="text-center" >  
           <td class="p-1">{{client.name}} </td>
           <td class="p-1">{{client.lastName}} </td>
           <td class="p-1">{{client.email}} </td>
@@ -49,7 +49,7 @@
       <div>
         <section >
           <h3>Client REST response</h3>
-          <pre>{{ JSON.stringify(dataClient, null, 2) }}</pre>
+          <pre>{{ JSON.stringify(dataClient._embedded.clients, null, 2) }}</pre>
         </section>
       </div>       
     </main>

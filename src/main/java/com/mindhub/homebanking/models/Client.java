@@ -15,10 +15,13 @@ public class Client {
      @GeneratedValue (strategy = GenerationType.AUTO,generator="datoId")
      @GenericGenerator( name = "datoId", strategy = "native")
      private Long  id;
-     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER) // asociar por client
     private Set<Account> accounts= new HashSet<>();// genera un espacio de referencia en memoria de la app
     @OneToMany(mappedBy="clientLoan",fetch = FetchType.EAGER)
     private Set<ClientLoan> clientLoans= new HashSet<>();
+
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    private Set<Card> cards= new HashSet<>();
     public Client() {
 
     }
@@ -63,10 +66,22 @@ public class Client {
     public void addAccount(Account account){
         account.setClient(this);// el set asigna el valor de todo el obj mentor
         this.accounts.add(account);// similar al push JS
+
     }
-
-
     public List<ClientLoan> getLoans() {
         return clientLoans.stream().collect(Collectors.toList());
     }
+
+    public Set<Card> getCards() {
+        return cards;
+    }
+    public void setCards(Set<Card> cards) {
+        this.cards = cards;
+    }
+    public void addCards(Card card){
+        card.setClient(this);
+        cards.add(card);
+    }
+
+
 }

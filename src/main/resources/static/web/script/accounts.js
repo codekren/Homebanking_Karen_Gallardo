@@ -4,11 +4,14 @@ createApp({
   data() {
     return {
       dataClient:{},
+      dataLoans:[],
       
     }
   },
   created(){
     this.loadData();
+    
+    
 
   },
 
@@ -17,6 +20,7 @@ createApp({
       axios('http://localhost:8080/api/clients/1')
       .then(datos=> {
         this.dataClient=datos.data 
+        this.dataLoans=this.dataClient.loans
 
       })
       .catch(err=> console.log('error'))

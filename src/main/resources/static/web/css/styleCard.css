@@ -1,0 +1,190 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+.mainp{
+    display: flex;
+    justify-content: center;
+    background-image: linear-gradient(120deg, #131313, #111);
+}
+.credit-card-wrapper{
+    position: relative;
+}
+.credit-card{
+    width: 525px;
+    height: 300px;
+    color:#fff;
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    padding: 20px 25px;
+    position: relative;
+    font-family: 'poppins', sans-serif;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);    
+}
+
+.credit-card-wrapper::before,
+.credit-card-wrapper::after{
+    content: "";
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    background-image: linear-gradient(57deg, #ff7a00,#ff7aff);
+    z-index: -1;
+}
+
+.credit-card-wrapper::before{
+    top:0;
+    right:0;
+    transform: translate(25%,-40%);
+}
+
+.credit-card-wrapper::after{
+    border-radius: 50%;
+    left: 0;
+    bottom: 0;
+    transform: translate(-50%,50%);
+}
+
+.credit-card .title{
+    text-transform: capitalize;
+}
+.credit-card .chip{
+    max-height: 70px;
+    margin: 10px 0;
+}
+
+.credit-card .bank-name{
+    position: absolute;
+    right: 25px;
+    top: 20px;
+    text-transform: capitalize;
+    font-size: 24px;
+    font-style: italic;
+    font-weight: 600;
+}
+
+.credit-card .card-number{
+    font-family: "orbitron", sans-serif;
+    letter-spacing: 5px;
+    text-shadow: 3px 3px 2px rgba(0,0,0,0.6);
+}
+
+.credit-card .validity{
+    text-transform: capitalize;
+    margin: 20px 0 25px;
+    display: flex;
+    align-items: center;
+}
+
+.validity span:first-child{
+    margin-right: 20px;
+    line-height: 1.2;
+    text-align: right;
+}
+.validity span:nth-child(2){
+    font-weight: 600;
+}
+.credit-card .holder-name{
+    font-weight: 300;
+    text-transform: capitalize;
+    letter-spacing: 2px;
+    font-size: 16px;
+}
+.credit-card .circles{
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    right: 50px;
+    bottom: 25px;
+}
+
+.credit-card .circles::before,
+.credit-card .circles::after{
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    top:0;
+}
+
+.credit-card .circles::before{
+    background-color: rgba(255,255,255,0.5);
+    left: 30%;
+}
+.credit-card .circles::after{
+    background-color: rgba(255,255,255,0.7);
+    right: 30%;
+}
+.card-strip {
+    background: #000;
+    height: 50px;
+    margin-bottom: 30px;
+}
+.card-signature{
+    float: left;
+    width: 65%;
+    height: 40px;
+    margin-left: 10px;
+    background: #999;
+}
+.card-cvv{
+    float: left;
+    margin-top: 5px;
+    padding: 7px;
+    background: #fff;
+    color: #111;
+    line-height: 1;
+}
+[v-cloak] {
+    display:none;
+}
+header{
+    min-height: 15vh;
+   
+   
+}
+
+.imgheader{
+    width: 15%;
+    object-fit:contain;
+    object-position: center;
+}
+
+main{
+    min-height: 65vh;
+    background-color:antiquewhite;
+}
+
+
+.imgcarrousel{
+    height: 40vh;
+    object-fit: cover;
+    object-position:center;
+    
+}
+footer{
+    min-height: 20vh;
+    background: linear-gradient(70deg, black, rgb(114, 112, 113));
+    -webkit-text-fill-color: aliceblue;
+}
+
+.imgfooter{
+    height: 8vh;
+} 
+
+ .imgmain{
+    height:15vh;
+    object-fit:cover;
+    object-position:center;
+    
+}
+
+
+/* @media screen {
+    
+} */

@@ -15,6 +15,8 @@ public class Client {
      @GeneratedValue (strategy = GenerationType.AUTO,generator="datoId")
      @GenericGenerator( name = "datoId", strategy = "native")
      private Long  id;
+
+     private String password;
      @OneToMany(mappedBy = "client", fetch = FetchType.EAGER) // asociar por client
     private Set<Account> accounts= new HashSet<>();// genera un espacio de referencia en memoria de la app
     @OneToMany(mappedBy="clientLoan",fetch = FetchType.EAGER)
@@ -26,10 +28,12 @@ public class Client {
 
     }
 
-    public Client(String name, String lastName, String email) {
+    public Client(String name, String lastName, String email,String password) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
+        this.password = password;
+
        }
 
     public String getName() {
@@ -83,5 +87,11 @@ public class Client {
         cards.add(card);
     }
 
+    public String getPassword() {
+        return password;
+    }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

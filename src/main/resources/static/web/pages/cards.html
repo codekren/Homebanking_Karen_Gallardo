@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="icon" href="../images/4.png" type="image/x-icon" >
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    >
+    <link rel="stylesheet" type="text/css" href="../css/styleCard.css" >
+</head>
+<body>
+    <div id="app" v-cloak>
+      <header class="d-flex justify-content-around align-items-center bg-body-tertiary">
+        <img  src="../images/3.png" alt="LogoBank" class="d-inline-block  imgheader">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary d-flex justify-content-center text-align-center" >
+          <button class="navbar-toggler" type="button"  data-bs-toggle="collapse"  data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup"  aria-expanded="false"  aria-label="Toggle navigation" >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav text-center">
+              <a class="nav-link" href="#">HOME</a>
+              <a class="nav-link" href="../pages/accounts.html">ACCOUNTS</a>
+              <a class="nav-link" href="#">LEAN</a>
+              <a class="nav-link active" aria-current="page" href="#">CARDS</a>
+              <a class="nav-link" href="#">INVESTMENTS</a>
+              <a class="nav-link" href="#">BB POINTS</a>
+              <a class="nav-link" href="#">INSURANCES</a>
+              <a class="nav-link" href="#">FINANCIAL EDUCATION</a>
+            </div>
+          </div>
+        </nav>
+        <div class="d-flex justify-content-center align-items-center">
+          <button type="button" class="btn btn-success btn-md" @click.prevent="logOut">Log out</button>
+        </div>
+      </header>
+
+
+      <main class="flex-grow-1 mainp d-flex flex-column align-items-center">
+        <h3 class="text-light mb-2 mt-4">Debit Cards</h3>
+        <section v-for="card of cardDebits" v-if="cardDebits.length>0" class="credit-card-wrapper mb-3 d-flex">
+        
+            <div class="credit-card me-3" >
+                <h4 class="title">Debit card</h4>
+                <span class="bank-name">Home Banking</span>
+                <img class="chip" src="../images/card.png" alt="chip">
+                <h3 class="card-number">{{card.number}}</h3>
+                <div class="validity">
+                    <span>Valid <br>thru: </span>
+                    <span>{{formatDate(card.thruDate)}}</span>
+                </div>
+                <div class="holder-name">{{card.cardHolder}}</div>
+                <div class="circles"></div>
+            </div>
+            <div class="credit-card">
+                <div class="card-strip"></div>
+                <div class="card-signature"></div>
+                <div class="card-cvc">{{card.cvv}}</div>
+                <div class="circles"></div>
+            </div>
+        </section>
+        <div v-else>
+            <p>Does not have credit cards!</p>
+        </div>
+        <h3 class="text-light mb-2 mt-4">Credit Cards</h3>
+        <section v-for="card of cardCredits" v-if="cardCredits.length>0" class="credit-card-wrapper mb-3 d-flex">
+            <div class="credit-card me-3">
+                <h4 class="title">Credit card</h4>
+                <span class="bank-name">Home Banking</span>
+                <img class="chip" src="../images/card.png" alt="chip">
+                <h3 class="card-number">{{card.number}}</h3>
+                <div class="validity">
+                    <span>Valid <br>thru: </span>
+                    <span>{{formatDate(card.thruDate)}}</span>
+                </div>
+                <div class="holder-name">{{card.cardHolder}}</div>
+                <div class="circles"></div>
+            </div>
+            <div class="credit-card">
+                <div class="card-strip"></div>
+                <div class="card-signature"></div>
+                <div class="card-cvc">{{card.cvv}}</div>
+                <div class="circles"></div>
+            </div>
+        </section>
+        <div v-else>
+            <p>Does not have credit cards!</p>
+        </div>
+    </main>
+    <footer class="d-flex flex-column p-4">
+      <div class="d-flex justify-content-around">
+        <div class="d-flex flex-column w-50 mx-2">
+          <h5 class="fst-italic text-primary">OUR BANK</h5>
+          <p class="fst-italic fs-5 text-primary">About us</p>
+          <p class="fst-italic fs-5 text-primary">directory</p>
+          <p class="fst-italic fs-5 text-primary">Administration</p>
+          <p class="fst-italic fs-5 text-primary">
+            Institutional Information
+          </p>
+          <p class="fst-italic fs-5 text-primary">Legal documents</p>
+          <p class="fst-italic fs-5 text-primary">Rate and Fees</p>
+          <p class="fst-italic fs-5 text-primary">Mortage Insurance Tender</p>
+          <p class="fst-italic fs-5 text-primary">Portability</p>
+          <p class="fst-italic fs-5 text-primary">Work with us</p>
+          <p class="fst-italic fs-5 text-primary">Sustainability</p>
+        </div>
+        <div class="d-flex flex-column w-50 ms-2">
+          <h5 class="fst-italic fs-5 text-primary">CUSTOMER SERVICE</h5>
+          <p class="fst-italic fs-5 text-primary">Frequent questions</p>
+          <p class="fst-italic fs-5 text-primary">Help and Contact</p>
+          <p class="fst-italic fs-5 text-primary">Tutorials</p>
+          <p class="fst-italic fs-5 text-primary">Offices and cashiers</p>
+          <p class="fst-italic fs-5 text-primary">Business Portal</p>
+          <p class="fst-italic fs-5 text-primary">Blog Millenials</p>
+          <p class="fst-italic fs-5 text-primary">Customer ombudsman</p>
+        </div>
+        <div class="d-flex flex-column grid gap-0 row-gap-3">
+          <a
+            class="m-2"
+            href="https://wa.me/+573024527869?text=Bienvenido!"
+            target="_blank"
+            ><img
+              src="../images/wsde.png"
+              class="imgfooter"
+              alt="link whatsapp"
+            >
+          </a>
+          <a
+            class="m-2"
+            href="https://www.facebook.com/groups/243471969040197"
+            target="_blank"
+            ><img
+              src="../images/fbde.png"
+              class="imgfooter"
+              alt="link de facebook"
+            >
+          </a>
+          <a class="m-2" href="https://www.twitter.com/" target="_blank"
+            ><img
+              src="../images/twdes.png"
+              class="imgfooter"
+              alt="link twitter"
+            >
+          </a>
+        </div>
+      </div>
+      <div class="pt-3">
+        <p class="text-center fw-lighter fs-6">
+          Find out about the entities authorized to issue Payment Cards in the
+          country, who are registered in the Registries of Card Issuers
+          maintained by the CMF, at www.cmfchile.cl . Find out about the state
+          guarantee of deposits at your bank or at cmfchile.cl. © 2020 Bank
+          Brothers. All rights reserved. Moneda 970, 7th floor, Santiago.
+        </p>
+      </div>
+    </footer>
+
+
+
+
+        
+    </div>
+ 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="../script/cards.js"></script>    
+</body>
+</html>

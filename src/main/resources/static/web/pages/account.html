@@ -10,7 +10,7 @@
 
 </head>
 <body>
-<div id="app" >
+<div class="layout" id="app" v-cloak >
   <header class="d-flex justify-content-around align-items-center bg-body-tertiary">
     <img  src="../images/3.png" alt="LogoBank" class="d-inline-block align-text-top imgheader">
     <nav class="navbar navbar-expand-lg bg-body-tertiary d-flex justify-content-center text-align-center" >
@@ -32,7 +32,7 @@
       </div>
     </nav>
     <div class="d-flex justify-content-center align-items-center">
-      <button type="button" class="btn btn-success btn-md">Log in</button>
+      <button type="button" class="btn btn-success btn-md" @click.prevent="logOut">Log out</button>
     </div>
   </header>
 <main class="d-flex flex-column justify-content-center">
@@ -62,15 +62,15 @@
   </div>
  
   <div class="d-flex justify-content-center text-align-center mb-1">
-  <h3 >Tu cuenta seleccionada: </h3>
+  <h3 >Your selected account: </h3>
   </div>
   <div class="d-flex justify-content-center">  
     <div class="card m-4" style="width: 18rem;">
-      <h5 class="card-header">Número de cuenta: {{dataAccount.number}}</h5>
+      <h5 class="card-header">Account number: {{dataAccount.number}}</h5>
       <div class="card-body">
-        <h5 class="card-title">Monto:</h5>
+        <h5 class="card-title">Amount:</h5>
         <p class="text-center fs-3" v-if="dataAccount.balance!=null">${{dataAccount.balance.toLocaleString('en-US',{minimumFractionDigits: 2, maximumFractionDigits: 2 })}}</p>
-        <p class="card-text"> Fecha Apertura: {{dataAccount.creationDate}} </p>
+        <p class="card-text"> Creation date: {{dataAccount.creationDate}} </p>
       </div>
     </div>
     </div>
@@ -78,22 +78,22 @@
   <div class="d-flex flex-column justify-content-center align-items-center">
 
     <h4>Transactions Resume: </h4>
-    <table  class="table w-75 mb-5 m-3 ">
+    <table  class="table w-75 mb-5 m-3 col-6 p-2">
         <thead>
           <tr>
-            <th>Type</th>
-            <th>Amount</th>
-            <th >Date</th>
-            <th >Description</th>
+            <th class="text-center">Type</th>
+            <th class="text-center">Amount</th>
+            <th class="text-center">Date</th>
+            <th class="text-center">Description</th>
           </tr>
         </thead>
         <tbody>
          
-          <tr v-for="transaction of dataAccount.transactions ">
-            <th :class="[ (transaction.type=='DEBITO' ? 'text-success' :'text-danger')] + ' col-8 '">{{transaction.type}}</th>
-            <td >{{transaction.amount.toLocaleString('en-US',{minimumFractionDigits:2, maximumFractionDigits:2})}}</td>
-            <td >{{new Date(transaction.date).toUTCString()}}</td>
-            <td >{{transaction.description}}</td>
+          <tr v-for="transaction of dataAccount.transactions">
+            <th :class="[ (transaction.type=='DEBITO' ? 'text-success' :'text-danger')] + ' col-2 '">{{transaction.type}}</th>
+            <td class="col-2">{{transaction.amount.toLocaleString('en-US',{minimumFractionDigits:2, maximumFractionDigits:2})}}</td>
+            <td class= "col-2">{{new Date(transaction.date).toUTCString()}}</td>
+            <td class= "col-2">{{transaction.description}}</td>
           </tr>
          </tbody>
       </table>
@@ -101,17 +101,71 @@
     
 
 </main>
-<footer class="d-flex flex-column align-items-center  justify-content-around ">
-  <div class="d-flex align-items-center justify-content-center mt-3 w-25 ">
-    <p class="fst-italic fs-5 text-primary text-center">HomeBanking 2023</p>
+<footer class="d-flex flex-column p-4">
+  <div class="d-flex justify-content-around">
+    <div class="d-flex flex-column w-50 mx-2">
+      <h5 class="fst-italic text-primary">OUR BANK</h5>
+      <p class="fst-italic fs-5 text-primary">About us</p>
+      <p class="fst-italic fs-5 text-primary">directory</p>
+      <p class="fst-italic fs-5 text-primary">Administration</p>
+      <p class="fst-italic fs-5 text-primary">
+        Institutional Information
+      </p>
+      <p class="fst-italic fs-5 text-primary">Legal documents</p>
+      <p class="fst-italic fs-5 text-primary">Rate and Fees</p>
+      <p class="fst-italic fs-5 text-primary">Mortage Insurance Tender</p>
+      <p class="fst-italic fs-5 text-primary">Portability</p>
+      <p class="fst-italic fs-5 text-primary">Work with us</p>
+      <p class="fst-italic fs-5 text-primary">Sustainability</p>
+    </div>
+    <div class="d-flex flex-column w-50 ms-2">
+      <h5 class="fst-italic fs-5 text-primary">CUSTOMER SERVICE</h5>
+      <p class="fst-italic fs-5 text-primary">Frequent questions</p>
+      <p class="fst-italic fs-5 text-primary">Help and Contact</p>
+      <p class="fst-italic fs-5 text-primary">Tutorials</p>
+      <p class="fst-italic fs-5 text-primary">Offices and cashiers</p>
+      <p class="fst-italic fs-5 text-primary">Business Portal</p>
+      <p class="fst-italic fs-5 text-primary">Blog Millenials</p>
+      <p class="fst-italic fs-5 text-primary">Customer ombudsman</p>
+    </div>
+    <div class="d-flex flex-column grid gap-0 row-gap-3">
+      <a
+        class="m-2"
+        href="https://wa.me/+573024527869?text=Bienvenido!"
+        target="_blank"
+        ><img
+          src="../images/wsde.png"
+          class="imgfooter"
+          alt="link whatsapp"
+        >
+      </a>
+      <a
+        class="m-2"
+        href="https://www.facebook.com/groups/243471969040197"
+        target="_blank"
+        ><img
+          src="../images/fbde.png"
+          class="imgfooter"
+          alt="link de facebook"
+        >
+      </a>
+      <a class="m-2" href="https://www.twitter.com/" target="_blank"
+        ><img
+          src="../images/twdes.png"
+          class="imgfooter"
+          alt="link twitter"
+        >
+      </a>
+    </div>
   </div>
-  <div class="d-flex justify-content-center">
-    <a class="m-2 " href="https://wa.me/+573024527869?text=Bienvenido!" target="_blank"><img src="../images/wsde.png" class="imgfooter" alt="link whatsapp" >
-    </a>
-    <a class="m-2 " href="https://www.facebook.com/groups/243471969040197" target="_blank"><img src="../images/fbde.png" class="imgfooter" alt="link de facebook" >
-    </a>
-    <a class="m-2 " href="https://www.twitter.com/" target="_blank"><img src="../images/twdes.png" class="imgfooter" alt="link twitter" >
-    </a>
+  <div class="pt-3">
+    <p class="text-center fw-lighter fs-6">
+      Find out about the entities authorized to issue Payment Cards in the
+      country, who are registered in the Registries of Card Issuers
+      maintained by the CMF, at www.cmfchile.cl . Find out about the state
+      guarantee of deposits at your bank or at cmfchile.cl. © 2020 Bank
+      Brothers. All rights reserved. Moneda 970, 7th floor, Santiago.
+    </p>
   </div>
 </footer>
 </div>

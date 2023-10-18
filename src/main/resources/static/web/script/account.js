@@ -22,6 +22,15 @@ createApp({
   },
 
   methods:{
+    logOut(){
+      axios.post('/api/logout')
+      .then(response => {
+        console.log('signed out!!!')
+        window.location.href = '/web/index.html';
+      })
+      .catch(err=>console.log("error"))
+     },    
+    
     loadData(){
       axios('http://localhost:8080/api/accounts/'+this.idAccount)
       .then(datos=> {

@@ -23,15 +23,27 @@ const { createApp } = Vue
             axios.post('/api/login', this.infoLogin)
               .then(response => {
                 console.log("Successful request", response.data);
-                this.errorMessage = "Successful login"
-                window.location.href = '/web/pages/accounts.html';
+                Swal.fire({
+                  position: 'top-end',
+                  icon: 'success',
+                  title: 'Welcome',
+                  showConfirmButton: false,
+                  timer: 1500
+                })
+                setTimeout(()=> {
+                  window.location.href = '/web/pages/accounts.html';
+                },3000);
+                
+
               })
               .catch(err => {
                 console.log(err);
-                this.errorMessage = "Invalid credentials. Please check your username and password and try again.";
-                setTimeout(() => {
-                    this.errorMessage = "";
-                  }, 5000);
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'Something went wrong!',
+                  
+                })
             })
             .finally(() => {
                 this.email = "";
@@ -39,27 +51,31 @@ const { createApp } = Vue
             });
         },
         
-        toggleView() {
-          this.showLogin = !this.showLogin;
-        },
         register(){
 
           this.infoRegister = `name=${this.name}&lastName=${this.lastName}&email=${this.email}&password=${this.password}`;
 
           axios.post('/api/clients',this.infoRegister)
-          .then(response => {
-            this.errorMessage = "Successful register"
+          .then(async () => {
+            await Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Register successful',
+              showConfirmButton: false,
+              timer: 1500
+            })
+           
             console.log('registered')
-            setTimeout(() => {
-              window.location.href='/web/pages/accounts.html';
-            }, 3000);
+            console.log(this.login())            
           })
           .catch(err => {
             console.log(err)
-            this.errorMessage = "Registration failed. Please check the provided information and try again.";
-              setTimeout(() => {
-                  this.errorMessage = "";
-                }, 5000);
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong!',
+             
+            })
           })
           .finally(() => {
             this.email = "";

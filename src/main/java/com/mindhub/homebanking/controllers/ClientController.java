@@ -3,6 +3,7 @@ package com.mindhub.homebanking.controllers;
 import com.mindhub.homebanking.dto.ClientDTO;
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
+import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -45,10 +47,15 @@ public class ClientController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private AccountController accountController;
+    @Autowired
+    private AccountRepository accountRepository;
 
     @RequestMapping(path = "/clients", method = RequestMethod.POST)
 
-    public ResponseEntity<Object> register(
+    public ResponseEntity<Object> register( // Este método maneja solicitudes Post a URL/clients
+                                            //para registrar nuevos usuarios
 
             @RequestParam String name, @RequestParam String lastName,
 
@@ -78,12 +85,16 @@ public class ClientController {
 
         }
 
+        Client client = new Client(name, lastName, email, passwordEncoder.encode(password));
+        clientRepository.save(client);
+        Account account = new Account(accountController.getRandomVINNumber(), 0.0, LocalDate.now());
+        client.addAccount(account);
+        accountRepository.save(account);
 
-        clientRepository.save(new Client(name, lastName, email, passwordEncoder.encode(password)));
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-    @RequestMapping("clients/current")
+    @RequestMapping("/clients/current")
     public ClientDTO getCurrentClient(Authentication authentication){
         Client client = clientRepository.findByEmail(authentication.getName());
         ClientDTO clientDTO = Optional.ofNullable(client)

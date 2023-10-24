@@ -37,7 +37,16 @@ createApp({
       axios.post('/api/logout')
       .then(response => {
         console.log('signed out!!!')
-        window.location.href = '/web/index.html';
+        Swal.fire({
+          title: 'Signed Out',
+          showClass: {
+            popup: 'animate__animated animate__fadeInDown'
+          },
+          hideClass: {
+            popup: 'animate__animated animate__fadeOutUp'
+          }
+        })
+        window.location.pathname = '/web/index.html';
       })
       .catch(err=>console.log("error"))
      }

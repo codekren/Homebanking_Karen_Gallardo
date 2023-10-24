@@ -24,14 +24,11 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav text-center">
-              <a class="nav-link" href="#">HOME</a>
-              <a class="nav-link" href="../pages/accounts.html">ACCOUNTS</a>
-              <a class="nav-link" href="#">LEAN</a>
-              <a class="nav-link active" aria-current="page" href="#">CARDS</a>
-              <a class="nav-link" href="#">INVESTMENTS</a>
-              <a class="nav-link" href="#">BB POINTS</a>
-              <a class="nav-link" href="#">INSURANCES</a>
-              <a class="nav-link" href="#">FINANCIAL EDUCATION</a>
+              <a class="nav-link" href="../index.html"><i class="bi bi-bank2"></i> HOME</a>
+              <a class="nav-link" href="../pages/accounts.html"><i class="bi bi-wallet-fill"></i> ACCOUNTS</a>
+              <a class="nav-link" href="#"><i class="bi bi-credit-card-2-back-fill"></i> CARDS</a>
+              <a class="nav-link active" aria-current="page" href=""><i class="bi bi-info-square-fill"></i> US</a>
+              
             </div>
           </div>
         </nav>
@@ -42,6 +39,9 @@
 
 
       <main class="flex-grow-1 mainp d-flex flex-column align-items-center">
+        <div class="d-flex justify-content-center align-items-center" >
+          <a href="../pages/create-cards.html" v-show="(cardDebits.length + cardCredits.length) < 6"> Create  Card</a>
+        </div>
         <h3 class="text-light mb-2 mt-4">Debit Cards</h3>
         <section v-for="card of cardDebits" v-if="cardDebits.length>0" class="credit-card-wrapper mb-3 d-flex">
         

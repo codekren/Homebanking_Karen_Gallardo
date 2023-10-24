@@ -11,51 +11,42 @@
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
     >
-    <link rel="stylesheet" type="text/css" href="../css/style.css" >
+    <link rel="stylesheet" type="text/css" href="../css/styleLogin.css" >
 </head>
-<body class="bodylogin">
-    <div id="app" >
-        <main>
-            <div class="login-container" v-if="showLogin">
-                <h2>Sign in</h2>
-                <form class="login-form" action="tu_archivo_de_validacion.php" method="post">
-                  <label for="username">Email:</label>
-                  <input v-model="email" type="text" id="username" name="username" required>
-            
-                  <label for="password">Password:</label>
-                  <input v-model="password" type="password" id="password" name="password" required>
-            
-                  <button @click.prevent="login" type="button" class="login-button">Sign in</button>
-                  <p>Are you not registered</p>
-                  <button @click.prevent="toggleView" type="button" class="login-button">Sign up</button>
-                </form>
-            </div>
-            <div class="login-container" v-else>
-              <h2>Sign up</h2>
-              <form class="login-form" action="tu_archivo_de_validacion.php" method="post">
-                <label for="name">First Name:</label>
-                <input v-model="name" type="text" id="name" name="name" required>
-
-                <label for="last_name">Last Name:</label>
-                <input v-model="lastName" type="text" id="last_name" name="last_name" required>
-
-                <label for="username">Email:</label>
-                <input v-model="email" type="text" id="username" name="username" required>
-          
-                <label for="password">Password:</label>
-                <input v-model="password" type="password" id="password" name="password" required>
-          
-                <button @click.prevent="register" type="button" class="login-button">Sign up</button>
-                <p>Are you registered</p>
-                <button @click.prevent="toggleView" type="button" class="login-button">Sign in</button>
-              </form>
+<body>
+    <div id="app" v-cloak >
+      <main class=" mainLogin">
+        <div class="main">  	
+         <input type="checkbox" id="chk" aria-hidden="true">
+    
+          <div class="login" v-if="showLogin">
+            <form class="form">
+              <label for="chk" aria-hidden="true">Log in</label>
+              <input class="input" type="email" name="email" placeholder="Email" required="" v-model = "email">
+              <input class="input" type="password" name="password" placeholder="Password" required="" v-model="password">
+              <button @click.prevent="login" type="button">Log in</button>
+            </form>
           </div>
-        </main>
-        
+    
+          <div class="register">
+            <form class="form">
+              <label for="chk" aria-hidden="true">Register</label>
+              <input class="input" type="text" name="txt" placeholder="First name" required="" v-model="name">
+              <input class="input" type="text" name="txt" placeholder="Last name" required="" v-model="lastName">
+              <input class="input" type="email" name="email" placeholder="Email" required="" v-model="email">
+              <input class="input" type="password" name="password" placeholder="Password" required="" v-model="password">
+              <button @click.prevent="register" type="button">Register</button>
+            </form>
+          </div>
+          </div>
+      </main>         
+       
+       
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
     crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="../script/login.js"></script>

@@ -6,6 +6,8 @@ createApp({
       dataClient:{},
       dataLoans:[],
       
+      
+      
     }
   },
   created(){
@@ -29,10 +31,22 @@ createApp({
       .then(datos=> {
         this.dataClient=datos.data 
         this.dataLoans=this.dataClient.loans
+        
+
 
       })
       .catch(err=> console.log('error'))
-  }
+  },
+    createAccount(){
+      axios.post('/api/clients/current/accounts')
+      .then(response=>{
+        console.log("created")
+        location.reload();
+        
+      })
+      .catch(err=> console.log("err"))
+
+    }
   
   }
 }).mount('#app')

@@ -17,7 +17,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.List;
 
 @Configuration
-public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
+public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter { //Global es el
+    // obj que utiliza Spring Security para saber como buscar los detalles del usuario//
+    // y la anotacion indica a spring que debe crear un objeto de este tipo cuando se está iniciando la //
+    // aplicacion //
     @Autowired
     ClientRepository clientRepository;
 
@@ -32,7 +35,9 @@ public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
                 throw new UsernameNotFoundException("Unknown user: " + inputEmail);
 
             }
-            List<GrantedAuthority> authorities;
+            List<GrantedAuthority> authorities; // interfaz utilizada para representar los roles
+            // o autoridades de un usuario, esto representa permisos que puede tener dentro en una
+            //aplicacion
 
             if ("admin@admin.com".equals(client.getEmail())) {
 
@@ -51,7 +56,7 @@ public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
 
     }
 
-    @Bean
+    @Bean // genera un objeto de tipo PassEncod para luego usar en cualquier parte de la aplicacion
     public PasswordEncoder passwordEncoder() {
 
 

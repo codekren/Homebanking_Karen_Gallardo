@@ -7,6 +7,8 @@ createApp({
       dataLoans:[],      
       
       
+      
+      
     }
   },
   created(){

@@ -53,7 +53,6 @@ public class ClientController {
     private AccountRepository accountRepository;
 
     @RequestMapping(path = "/clients", method = RequestMethod.POST)
-
     public ResponseEntity<Object> register( // Este método maneja solicitudes Post a URL/clients
                                             //para registrar nuevos usuarios
 
@@ -62,19 +61,19 @@ public class ClientController {
             @RequestParam String email, @RequestParam String password) {
 
 
-        if (name.isEmpty()) {
+        if (name.isEmpty() || name.isBlank()) {
             return new ResponseEntity<>("Name is missing", HttpStatus.FORBIDDEN);
         }
 
-        if (lastName.isEmpty()) {
-            return new ResponseEntity<>("Last name is missing", HttpStatus.FORBIDDEN);
+        if (lastName.isEmpty()|| name.isBlank()) {
+            return new ResponseEntity<>("Lastname is missing", HttpStatus.FORBIDDEN);
         }
 
-        if (email.isEmpty()) {
+        if (email.isEmpty()|| name.isBlank()) {
             return new ResponseEntity<>("Email is missing", HttpStatus.FORBIDDEN);
         }
 
-        if (password.isEmpty()) {
+        if (password.isEmpty()|| name.isBlank()) {
             return new ResponseEntity<>("Password is missing", HttpStatus.FORBIDDEN);
         }
 
@@ -92,7 +91,7 @@ public class ClientController {
         accountRepository.save(account);
 
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>("Client successfully created", HttpStatus.CREATED);
     }
     @RequestMapping("/clients/current")
     public ClientDTO getCurrentClient(Authentication authentication){

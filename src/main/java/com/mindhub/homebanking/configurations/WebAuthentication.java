@@ -61,7 +61,7 @@ public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter { /
 
 
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-
+        //proporciona un codificador de contraseñas para asegurar las contraseñas almacenadas.
     }
 
 }

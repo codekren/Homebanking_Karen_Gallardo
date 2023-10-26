@@ -33,17 +33,15 @@ const { createApp } = Vue
                 setTimeout(()=> {
                   window.location.href = '/web/pages/accounts.html';
                 },3000);
-                
+
 
               })
               .catch(err => {
                 console.log(err);
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Oops...',
-                  text: 'Something went wrong!',
-                  
-                })
+                this.errorMessage = "Invalid credentials. Please check your username and password and try again.";
+                setTimeout(() => {
+                    this.errorMessage = "";
+                  }, 5000);
             })
             .finally(() => {
                 this.email = "";
@@ -51,31 +49,27 @@ const { createApp } = Vue
             });
         },
         
+        toggleView() {
+          this.showLogin = !this.showLogin;
+        },
         register(){
 
           this.infoRegister = `name=${this.name}&lastName=${this.lastName}&email=${this.email}&password=${this.password}`;
 
           axios.post('/api/clients',this.infoRegister)
-          .then(async () => {
-            await Swal.fire({
-              position: 'top-end',
-              icon: 'success',
-              title: 'Register successful',
-              showConfirmButton: false,
-              timer: 1500
-            })
-           
+          .then(response => {
+            this.errorMessage = "Successful register"
             console.log('registered')
-            console.log(this.login())            
+            setTimeout(() => {
+              window.location.href='/web/pages/accounts.html';
+            }, 3000);
           })
           .catch(err => {
             console.log(err)
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'Something went wrong!',
-             
-            })
+            this.errorMessage = "Registration failed. Please check the provided information and try again.";
+              setTimeout(() => {
+                  this.errorMessage = "";
+                }, 5000);
           })
           .finally(() => {
             this.email = "";

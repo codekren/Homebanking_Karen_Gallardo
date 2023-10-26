@@ -6,7 +6,7 @@ createApp({
       dataAccount:{},
       parametro:null,
       idAccount:0,
-     
+      transaction:{},
 
     }
   },
@@ -35,6 +35,10 @@ createApp({
       axios('http://localhost:8080/api/accounts/'+this.idAccount)
       .then(datos=> {
         this.dataAccount=datos.data
+        this.transaction=this.dataAccount.transactions.sort((transaction1,transaction2)=> {
+          return transaction2.id - transaction1.id
+        })
+
         
       })
       .catch(err=> console.log('error'))

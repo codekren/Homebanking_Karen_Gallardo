@@ -6,6 +6,7 @@ import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,7 +48,15 @@ public class AccountController {
         return accountDTO;
 
     }
+    @RequestMapping(path = "/clients/current/accounts", method = RequestMethod.GET)
 
+    public List<AccountDTO> getAccounts (Authentication authentication){
+
+        Client client = clientRepository.findByEmail(authentication.getName());
+        List <AccountDTO> accountsClient = client.getAccount().stream().map(account->
+                new AccountDTO(account)).collect(Collectors.toList());
+        return accountsClient;
+    }
     @RequestMapping(path = "/clients/current/accounts", method = RequestMethod.POST)
 
     public ResponseEntity<Object> createAccount(Authentication authentication ) {
@@ -70,7 +79,7 @@ public class AccountController {
         }
 
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>("Created successfully", HttpStatus.CREATED);
     }
     public String getRandomVINNumber() {
             Random random = new Random();
@@ -83,6 +92,7 @@ public class AccountController {
         } while (accountRepository.findByNumber(vinNumber) !=null);
         return vinNumber;
     }
+
 
 
 }

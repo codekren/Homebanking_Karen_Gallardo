@@ -8,7 +8,10 @@ import java.util.List;
 
 @RepositoryRestResource
 public interface ClientRepository extends JpaRepository <Client, Long > {
-   Client findByEmail (String email);
+   Client findByEmail (String email); // indica que el método se usa para buscar un objeto de tipo Client
+    // basado en el param email, o sea se busca un cliente cuyo correo electrónico coincida con el valor proporcionado.
+
+
     }
 
 

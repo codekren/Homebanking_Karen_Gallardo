@@ -1,0 +1,60 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+[v-cloak] {
+    display:none;
+}
+header{
+    min-height: 15vh; 
+    position:fixed;  
+   
+}
+.divheader{
+    background-color: black;
+    color:aliceblue;
+    
+}
+
+.imgheader{
+    width: 15%;
+    object-fit:contain;
+    object-position: center;
+}
+
+main{
+    min-height: 65vh;
+    background-color:whitesmoke;
+}
+
+
+.imgcarrousel{
+    height: 40vh;
+    object-fit: cover;
+    object-position:center;
+    
+}
+footer{
+    min-height: 20vh;
+    background: linear-gradient(70deg, black, rgb(114, 112, 113));
+    -webkit-text-fill-color: aliceblue;
+}
+
+.imgfooter{
+    height: 8vh;
+} 
+
+ .imgmain{
+    height:15vh;
+    object-fit:cover;
+    object-position:center;
+    
+}
+
+.homeBank{
+    width: 100%;    
+    background-repeat: no-repeat;
+    object-position: center;
+    object-fit: fill;
+}

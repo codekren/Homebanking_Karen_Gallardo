@@ -25,11 +25,11 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav text-center">
-              <a class="nav-link" href="../index.html"><i class="bi bi-bank2"></i> HOME</a>
+              <a class="nav-link" href="../index.html" ><i class="bi bi-bank2"></i> HOME</a>
               <a class="nav-link active" aria-current="page" href="#"><i class="bi bi-wallet-fill"></i> ACCOUNTS</a>
-              <a class="nav-link" href="../pages/cards.html"><i class="bi bi-credit-card-2-back-fill"></i> CARDS</a>
-              <a class="nav-link" href=""><i class="bi bi-info-square-fill"></i> US</a>
-             
+              <a class="nav-link" href="./transfers.html"><i class="bi bi-cash-coin"></i> TRANSFERS </a>
+              <a class="nav-link" href="./cards.html"><i class="bi bi-credit-card-2-back-fill"></i> CARDS</a>
+              <a class="nav-link" href=""><i class="bi bi-info-square-fill"></i> US</a>            
              
             </div>
           </div>
@@ -40,7 +40,7 @@
         </div>
       </header>
       <main class="d-flex flex-column justify-content-center flex-grow-1" >
-        <div id="carouselExampleFade" class="carousel slide carousel-fade">
+        <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
           <div class="carousel-inner carrousel">
             <div class="carousel-item active">
               <img
@@ -96,12 +96,13 @@
           </h3>
           <button v-show="dataClient.accounts&& dataClient.accounts.length < 3" @click="createAccount" class="btn btn-primary btn-sm  w-25">Create Account</button>
         </div>
-        
-        <h4 class="text-center fst-italic text-success bg-body-secondary">Your Products</h4>
+        <div> 
+        <h4 class="text-center fw-italic text-success bg-body-secondary border border-info-subtle border-1 rounded p-4">Your Products</h4>
+        </div>
         <section class="d-flex col-md justify-content-center">
           <div
             v-for="account of dataClient.accounts"
-            class="d-flex justify-content-center m-2 border border-3 "
+            class="d-flex justify-content-evenly  "
           >
           <div class="card">
             <div class="card-details">
@@ -119,28 +120,26 @@
           
         </section>
        
-        <section class="d-flex col-md justify-content-center">
-          <div
-            v-for="loan of dataLoans"
-            v-if="dataLoans&& dataLoans.length > 0"
-            class="d-flex justify-content-center m-3 mb-5 border border-3"
-          >
-            <div class="card " >
-                  <div class="card-body">
-                    <h5 class="card-title">
-                      Loan Name: {{loan.name}}
-                    </h5>
-                    <p class="card-text">Amount:</p>
-                    <p class="card-text">${{loan.amount.toLocaleString('en-US',{minimumFractionDigits: 2, maximumFractionDigits: 2 })}}</p>
-                    <p class="card-text"> 
-                      <small class="text-body-secondary"
-                        >Payments: {{loan.payments}}</small>
-                    </p>
-                    
-                  </div>
-            </div>
+        <section class="d-flex col-md justify-content-center m-4">
+          <div v-if="dataLoans&& dataLoans.length > 0" class="w-50">
+          <table class="table table-bordered border-primary "  >
+            <thead>
+              <tr >
+                <th class="text-center" >Loan Name</th>
+                <th class="text-center" >Amount</th>
+                <th class="text-center">Payments</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="loan of dataLoans">
+                <td class="fw-lighter text-center">{{loan.name}}</td>
+                <td class="fw-lighter text-center">${{loan.amount.toLocaleString('en-US',{minimumFractionDigits:2, maximumFractionDigits:2})}}</td>
+                <td class="text-center fw-lighter">{{loan.payments}}</td>
+              </tr>              
+            </tbody>
+          </table> 
           </div>
-          <div v-else class="card m-2" style="width: 36rem">
+          <div v-else class="card m-2 p-3" style="width: 36rem">
             <h5 class="card-title text-center fw-light">Does not have loans</h5>
           </div>
         </section>        

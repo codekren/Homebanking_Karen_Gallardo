@@ -24,7 +24,8 @@ public class HomebankingApplication {
 	}
 
 	@Bean
-	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository,
+	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository,
+									  TransactionRepository transactionRepository,
 									  LoanRepository loanRepository, ClientLoanRepository clientLoanRepository,
 									  CardRepository cardRepository) {
 		return args -> {
@@ -33,7 +34,8 @@ public class HomebankingApplication {
 					passwordEncoder.encode("Melba"));
 			Client client2 = new Client("Jona","Giraldo","jona@mindhub.com",
 					passwordEncoder.encode("Jona"));
-			Client admin = new Client("Admin","Admin","admin@admin.com", passwordEncoder.encode("admin123"));
+			Client admin = new Client("Admin","Admin","admin@admin.com",
+					passwordEncoder.encode("admin123"));
 
 			clientRepository.save(client1);
 			clientRepository.save(client2);
@@ -52,10 +54,10 @@ public class HomebankingApplication {
 			accountRepository.save(account2);
 			accountRepository.save(account3);
 
-			Transaction transaction = new Transaction(2000, "buy market", LocalDateTime.now(), TransactionType.DEBITO);
-			Transaction transaction1 = new Transaction(-3000, "payback internet", LocalDateTime.now(), TransactionType.CREDITO);
-			Transaction transaction2 = new Transaction(5000, "breakfast fee", LocalDateTime.now(), TransactionType.DEBITO);
-			Transaction transaction3 = new Transaction(-2500, "buy pizza", LocalDateTime.now(), TransactionType.CREDITO);
+			Transaction transaction = new Transaction(-2000, "buy market", LocalDateTime.now(), TransactionType.DEBIT);
+			Transaction transaction1 = new Transaction(3000, "payback internet", LocalDateTime.now(), TransactionType.CREDIT);
+			Transaction transaction2 = new Transaction(-5000, "breakfast fee", LocalDateTime.now(), TransactionType.DEBIT);
+			Transaction transaction3 = new Transaction(2500, "buy pizza", LocalDateTime.now(), TransactionType.CREDIT);
 			account.addTransaction(transaction);
 			account.addTransaction(transaction1);
 			account2.addTransaction(transaction2);
@@ -65,15 +67,15 @@ public class HomebankingApplication {
 			transactionRepository.save(transaction2);
 			transactionRepository.save(transaction3);
 
-		/*Loan loan1=new Loan("Hipotecario",500000, List.of(12,24,36,48,60));
+		Loan loan1=new Loan("Mortgage",500000, List.of(12,24,36,48,60));
 		Loan loan2=new Loan("Personal",100000, List.of(6,12,24));
-		Loan loan3=new Loan("Automotriz",300000, List.of(6,12,24,36));
+		Loan loan3=new Loan("Car",300000, List.of(6,12,24,36));
 		loanRepository.save(loan1);
 		loanRepository.save(loan2);
-		loanRepository.save(loan3);*/
+		loanRepository.save(loan3);
 
 
-			Loan loan4 = new Loan("Hipotecario", 400000, List.of(60));
+			Loan loan4 = new Loan("Mortgage", 400000, List.of(60));
 			Loan loan5 = new Loan("Personal", 50000, List.of(12));
 			ClientLoan clientLoan1 = new ClientLoan(400000, 60, client1, loan4);
 			ClientLoan clientLoan2 = new ClientLoan(50000, 12, client1, loan5);

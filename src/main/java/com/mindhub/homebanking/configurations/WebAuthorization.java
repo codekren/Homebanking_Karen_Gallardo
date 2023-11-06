@@ -14,25 +14,34 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
-@EnableWebSecurity // habilita la seguridad web en la aplic y dice a Spring que debe cargar la configuracion de seguridad definida en WebAuthorization
-@Configuration // indica q esta clase es un clase de configuracion de Spring
+
+
+@EnableWebSecurity
+@Configuration
 public class WebAuthorization extends WebSecurityConfigurerAdapter {
-    //Spring security usa el objeto WebSecurityConfigurerAdapter para configurar
 
-    @Override //para personalizar la config de seguridad Este método se encarga de configurar cómo se autorizan las solicitudes HTTP en la aplicación
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests() //se definen las reglas de autorización para rutas específicas(URL)
+        http.authorizeRequests()
 
-                .antMatchers(HttpMethod.POST,"/web/index.html","/web/pages/accounts.html").permitAll()
-                .antMatchers(HttpMethod.POST,"/api/clients").permitAll()
-                .antMatchers(HttpMethod.POST,"/web/pages/login.html").permitAll()
-                .antMatchers("/h2-console").hasAuthority("ADMIN")
-                .antMatchers("/api/clients/current/cards").hasAuthority("CLIENT")
-                .antMatchers(HttpMethod.POST,"/web/pages/cards.html",
-                        "/api/clients/current/accounts").hasAuthority("CLIENT")
-                .antMatchers(HttpMethod.GET,"/api/clients/current",
-                        "/api/clients/current/accounts").hasAuthority("CLIENT")
-                .antMatchers(HttpMethod.POST,"/api/transactions" ).hasAuthority("CLIENT");
+                .antMatchers("/web/index.html","/web/pages/login.html","/web/css/**"
+                        ,"/web/images/**","/web/script/index.js","/web/script/login.js").permitAll()
+                .antMatchers(HttpMethod.POST,"/api/clients","/api/login").permitAll()
+                .antMatchers("/web/pages/manager.html","/web/script/manager.js",
+                        "/h2-console/**","/rest/**").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.GET,"/api/accounts","/api/clients").hasAuthority("ADMIN")
+                .antMatchers("/web/pages/account.html/**","/web/pages/accounts.html",
+                        "/web/pages/cards.html","/web/pages/create-cards.html","/web/pages/transfers.html"
+                        ,"/api/accounts/{id}","/web/script/accounts.js","/web/script/account.js"
+                        ,"/web/script/cards.js","/web/pages/loan-application.html","/web/script/loan-application.js",
+                        "/web/script/create-card.js","/web/script/transfers.js").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.GET,"/api/clients/current","/api/clients/current/cards",
+                        "/api/clients/current/accounts","/api/loans").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.POST,"/api/clients/current/accounts",
+                        "/api/clients/current/cards","/api/transactions","/api/loans","/web/pages/loan-application.html").hasAuthority("CLIENT")
+                .anyRequest().denyAll();
+
+
 
 
         http.formLogin() //Define el logeo
@@ -41,18 +50,16 @@ public class WebAuthorization extends WebSecurityConfigurerAdapter {
                 .passwordParameter("password")
                 .loginPage("/api/login");
 
-        http.logout().logoutUrl("/api/logout"); //Configura la URL de peticion cierre de sesión.
+        http.logout().logoutUrl("/api/logout");
 
-        http.csrf().disable();//Desactiva la protección contra ataques CSRF (Cross-Site Request Forgery)
-        // Esto es común en aplicaciones que utilizan autenticación basada en tokens.
+        http.csrf().disable();
 
-        http.headers().frameOptions().disable();// permitir la visualización de la consola H2 si se está utilizando una base de datos H2 en la aplicación.
+        http.headers().frameOptions().disable();
 
         http.exceptionHandling().authenticationEntryPoint((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
-        //Configura un controlador de excepciones personalizado para manejar la autenticación no exitosa.
 
-        http.formLogin().successHandler((req, res, auth) -> clearAuthenticationAttributes(req)); //Configura un controlador de éxito de inicio de sesión
-        // que limpia los atributos de autenticación.
+        http.formLogin().successHandler((req, res, auth) -> clearAuthenticationAttributes(req));
+        //que limpia los atributos de autenticación.
 
         http.formLogin().failureHandler( //Configura un controlador de fallo de inicio de sesión que devuelve un error
                 (req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));

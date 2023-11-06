@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping ("/api")
@@ -33,6 +34,7 @@ public class TransactionController  {
 
     @Autowired
     private TransactionRepository transactionRepository;
+
 
     @Transactional
     @RequestMapping (value = "/transactions", method = RequestMethod.POST)
@@ -107,11 +109,12 @@ public class TransactionController  {
         accountRepository.save(accountBegin);
         accountRepository.save(accountFinal);
 
+        AccountDTO accountDTO = new AccountDTO(accountBegin);
+        Long accountId = accountDTO.getId();
+        return new ResponseEntity<>(accountId, HttpStatus.CREATED);
 
-        return new ResponseEntity<>("Transaction successfully created", HttpStatus.CREATED);
+
     }
-
-
 
 
 }

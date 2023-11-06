@@ -7,7 +7,14 @@
     display:none;
   
 }
+.divimglogo{
+  min-width:30vw;
+}
+.imglogo{
+ min-height: 30vh;
 
+  
+}
 .mainLogin{
   display: flex;
   justify-content: center;

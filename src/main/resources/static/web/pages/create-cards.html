@@ -9,19 +9,26 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-      crossorigin="anonymous"
-    >
+      crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" type="text/css" href="../css/styleCreateCards.css" >
   
 </head>
-<body class= "imgCreateCards" >
+<body class="imgCreateCards" >
   <div id="app">
-    <main >
-
-    <div class="d-flex justify-content-center align-items-center ">
-      
-    <form class="mt-5 p-2" >
-        <label for="cardType"  class="badge bg-primary text-wrap fs-5" style="width: 12rem">Card Type:</label>
+    <main class="d-flex flex-column justify-content-center align-content-center">
+      <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center divH2">
+          <h2 class="m-3 p-1 fst-italic bg-white">Pick your favorite Card</h2>       
+        </div>
+        <div class="d-flex divButton align-items-center">
+          <button type="button" class="btn btn-secondary" @click.prevent="returnCards"><i class="bi bi-arrow-return-left">            
+          </i> Return</button> 
+        </div>
+      </div>
+    <div class="d-flex justify-content-center align-items-center ">      
+      <form class="m-3 p-2" >
+        <label for="cardType"  class="badge text-wrap fs-5" style="width: 12rem">Card Type:</label>
         <input type="radio" id="debit" v-model="cardType" value="DEBIT">
         <label for="debit">DEBIT</label>
         <input type="radio" id="credit" v-model="cardType" value="CREDIT">
@@ -29,7 +36,7 @@
   
         <br>
   
-        <label for="cardColor" class="badge bg-primary text-wrap fs-5" style="width: 12rem">Card Color:</label>
+        <label for="cardColor" class="badge  text-wrap fs-5" style="width: 12rem">Card Color:</label>
         <input type="radio" id="silver" v-model="cardColor" value="SILVER">
         <label for="silver">SILVER</label>
         <input type="radio" id="gold" v-model="cardColor" value="GOLD">
@@ -41,8 +48,10 @@
   
         <button type="button" @click="createCard" >Create</button>
       </form>
-      <h2 class="m-5 p-1 fst-italic bg-white">Pick your favorite Card</h2> 
-    </div> 
+      <div class="imgCreateCards">
+              
+      </div> 
+    </div>
     
     </main>
   </div>

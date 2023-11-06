@@ -6,13 +6,18 @@
 }
 
 .imgCreateCards{
-    background-image: url("../images/pexels-mikhail-nilov-7534801.jpg");
-    background-position: center;
-    object-fit: contain;
-    background-repeat: no-repeat;
+    min-width: 30rem;
+    background-image: url("../images/Tarjeta_de_credito_administracion_manejo_TDC.avif");
+    object-position: center;
+
     
 }
-
+.divButton{
+    width: 10vw;
+}
+.divH2{
+    width: 90vw;
+}
         form {
             display: flex;
             flex-direction: column;
@@ -44,12 +49,12 @@
         }
 
         input[type="radio"]:checked + label {
-            background-color: #007BFF;
+            background-color: grey;
             color: #fff;
         }
 
         button {
-            background-color: #007BFF;
+            background-color: grey;
             color: #fff;
             border: none;
             padding: 10px 20px;
@@ -60,6 +65,6 @@
         }
 
         button:hover {
-            background-color: #0056b3;
+            background-color: #222324;
         }
     

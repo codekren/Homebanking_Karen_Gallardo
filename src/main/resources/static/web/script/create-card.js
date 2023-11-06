@@ -10,6 +10,11 @@ createApp({
     };
   },
   methods: {
+    returnCards(){
+      location.href = "./cards.html";
+
+    },
+
     createCard() {
       // Realiza la solicitud POST para crear la tarjeta
       this.cardData = `cardColor=${this.cardColor}&cardType=${this.cardType}`;

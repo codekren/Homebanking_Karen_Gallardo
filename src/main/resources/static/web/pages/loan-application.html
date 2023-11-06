@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="icon" href="../images/4.png" type="image/x-icon" >
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css" href="../css/styleLoanApplication.css" >
+</head>
+<body>
+    <div id="app">
+        <main>
+            <main class="d-flex  justify-content-evenly align-items-center flex-grow-1 imgCreateCards" >
+                <div class="d-flex flex-column">
+                  <h2 class=" text-center  rounded-end m-2 p-2 fst-italic"> Please, </h2>
+                  <h2 class=" text-center rounded-end m-2 p-2 fst-italic"> Make your transfer </h2>
+                </div>
+                <form class="form mb-5 mt-4">
+                    <p class="title">Simulate your loan </p>
+                    <p class="message">Complete information </p>
+                              
+                    <label for="selectedLoan">Select Loan:</label>
+                        <select class="input" id="selectedLoan" name="selectedLoan" v-model="typeLoan" @change="updateListPayments">
+                        <option v-for="loan of dataLoans "  :value="loan.id" >{{loan.name}} </option>                                   
+                        </select>
+
+                    <label for="selectPayments"  >Select payments:</label>
+                        <select class="input" id="selectPayments" name="selectPayments" v-model="payments" @change="updateListPayments">
+                        <option v-for="payment of listPayments" :value="payment"> {{payment}} </option>
+                        </select>
+                        
+                        
+                    <label> Amount</label>  
+                    <label>
+                        <input class="input" type="number" id="amount" name="amount" v-model="amount" @input="updateListPayments">
+                        <span><i class="bi bi-currency-dollar"></i> Amount</span>
+                        <span v-show="typeLoan != null"> Amount max ${{maxAmount.toLocaleString('en-US',{minimumFractionDigits: 2, maximumFractionDigits: 2})}} </span>
+                        
+                    </label>
+                    <div v-if="typeLoan !== null && amount != 0 && payments != null" class="mt-1">
+                        <p class="fw-1">Monthly payment: ${{monthlyPayment.toLocaleString('en-US', { minimumFractionDigits: 2,  maximumFractionDigits: 2 })}}</p>
+                    </div>
+        
+                    <label for="accountSelected"  >Select your  account destination :</label>                                   
+                        <select id="accountSelected" name="accountSelected" v-model="accountSelected" @click>
+                        <option v-for="account of clientAccounts" :value="account.number" > {{account.number}} </option>           
+                        </select>
+                     
+                    <button class="submit" @click.prevent="loanCreated" >apply</button>
+                    
+                </form>  
+            
+        </main>
+    </div>
+    <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="../script/loan-application.js"></script>   
+</body>
+</html>

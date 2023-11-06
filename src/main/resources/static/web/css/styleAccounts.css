@@ -10,7 +10,18 @@ header{
     min-height: 15vh;   
    
 }
+.divheader{
+    background-color: black;
+    color:rgb(172, 162, 164);
+    
+}
+.a_nav:hover {
+    color: green !important;
+  }
 
+.divProducts{
+    width: 50rem;
+}
 .imgheader{
     width: 15%;
     object-fit:contain;
@@ -69,11 +80,11 @@ footer{
    
    .card-button {
     transform: translate(-50%, 125%);
-    width: 30%;
+    width: 40%;
     border-radius: 1rem;
     border: none;
-    background-color: #008bf8;
-    color: #fff;
+    background-color:#05A081;
+    color: whitesmoke;
     font-size: 1em;
     padding: .5rem 1rem;
     position: absolute;
@@ -95,7 +106,7 @@ footer{
    
    /*Hover*/
    .card:hover {
-    border-color: #008bf8;
+    border-color: #05A081;
     box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.25);
    }
    

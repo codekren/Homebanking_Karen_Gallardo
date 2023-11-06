@@ -10,6 +10,14 @@ header{
     min-height: 15vh;   
    
 }
+.divheader{
+    background-color: black;
+    color:rgb(172, 162, 164);
+    
+}
+a:hover {
+    color: green !important;
+  }
 
 .imgheader{
     width: 15%;

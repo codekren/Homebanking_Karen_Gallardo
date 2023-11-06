@@ -6,18 +6,20 @@ createApp({
       dataClient:{},
       dataLoans:[],      
       
-      
-      
-      
     }
   },
   created(){
     this.loadData();    
     
-
   },
 
   methods:{
+    createLoan(){
+     
+        window.location.href = '/web/pages/loan-application.html';
+
+    },
+
     logOut(){
       axios.post('/api/logout')
       .then(response => {
@@ -32,9 +34,7 @@ createApp({
       .then(datos=> {
         this.dataClient=datos.data 
         this.dataLoans=this.dataClient.loans
-        
-
-
+      
       })
       .catch(err=> console.log('error'))
   },

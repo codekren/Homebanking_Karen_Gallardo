@@ -4,6 +4,12 @@
     box-sizing: border-box;
 }
 
+
+
+a:hover {
+    color: green !important;
+}
+
 .mainp{
     display: flex;
     justify-content: center;
@@ -160,13 +166,6 @@ main{
     background-color:antiquewhite;
 }
 
-
-.imgcarrousel{
-    height: 40vh;
-    object-fit: cover;
-    object-position:center;
-    
-}
 footer{
     min-height: 20vh;
     background: linear-gradient(70deg, black, rgb(114, 112, 113));
@@ -184,7 +183,3 @@ footer{
     
 }
 
-
-/* @media screen {
-    
-} */

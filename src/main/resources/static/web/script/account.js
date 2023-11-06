@@ -29,7 +29,12 @@ createApp({
         window.location.href = '/web/index.html';
       })
       .catch(err=>console.log("error"))
-     },    
+     }, 
+
+     formatDateTime(dateTime) {
+      const options = {  month: 'long', day: 'numeric',year: 'numeric', hour: '2-digit', minute: '2-digit' };
+      return new Date(dateTime).toLocaleDateString('en-US', options);
+    },  
     
     loadData(){
       axios('http://localhost:8080/api/accounts/'+this.idAccount)

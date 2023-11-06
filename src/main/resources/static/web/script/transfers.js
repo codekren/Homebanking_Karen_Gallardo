@@ -7,16 +7,17 @@ createApp({
       originAccount:"",
       finalAccount:"",
       amount:0,
+      destinationType:"",
       description:"",
       transactions:"",
-      destinationType:"",
+      
+      accountId:"",
       
     }
   },
   created(){
     this.loadData();    
     
-
   },
   computed:{
   filteredAccounts() {
@@ -43,16 +44,26 @@ createApp({
       .catch(err=> console.log('error'))
   },
     newTransaction(){
-
+   
     this.transactions = `amount=${this.amount}&description=${this.description}&numberBegin=${this.originAccount}&numberFinal=${this.finalAccount}`
-
+      
     axios.post('/api/transactions',this.transactions)
-    .then(() =>{
-        
-        window.location.pathname = "/web/pages/accounts.html";
+    .then(response =>{
+      this.accountId = response.data
+      console.log(this.accountId)
+      window.location.href = '/web/pages/account.html?id='+this.accountId  
+      this.originAccount = ""
+      this.finalAccount = ""
+      this.destinationType = ""
+      this.description = "" 
+      this.amount = 0 
         
     } )
-    .catch(err => console.log('error'))
+    .catch(err =>{
+  
+      
+    console.log(err)}
+    )
     },
   }
 }).mount('#app')

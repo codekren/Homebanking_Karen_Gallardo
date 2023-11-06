@@ -17,12 +17,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.List;
 
 @Configuration
-public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter { //Global es el
-    // obj que utiliza Spring Security para saber como buscar los detalles del usuario//
-    // y la anotacion indica a spring que debe crear un objeto de este tipo cuando se está iniciando la //
-    // aplicacion //
+public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
     @Autowired
-    ClientRepository clientRepository;
+    private ClientRepository clientRepository;
 
     @Override
     public void init(AuthenticationManagerBuilder auth) throws Exception {
@@ -55,12 +52,10 @@ public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter { /
         });
 
     }
-
     @Bean // genera un objeto de tipo PassEncod para luego usar en cualquier parte de la aplicacion
     public PasswordEncoder passwordEncoder() {
 
-
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+            return PasswordEncoderFactories.createDelegatingPasswordEncoder();
         //proporciona un codificador de contraseñas para asegurar las contraseñas almacenadas.
     }
 

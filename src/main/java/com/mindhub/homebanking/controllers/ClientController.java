@@ -23,6 +23,12 @@ import java.util.stream.Stream;
 public class ClientController {
     @Autowired // inyección de dependencias de springboot(contexto)
     private ClientRepository clientRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private AccountController accountController;
+    @Autowired
+    private AccountRepository accountRepository;
 
     @RequestMapping("/clients")
     public List<ClientDTO> getAllClients() {
@@ -43,15 +49,6 @@ public class ClientController {
         return clientDTO;
 
     }
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private AccountController accountController;
-    @Autowired
-    private AccountRepository accountRepository;
-
     @RequestMapping(path = "/clients", method = RequestMethod.POST)
     public ResponseEntity<Object> register( // Este método maneja solicitudes Post a URL/clients
                                             //para registrar nuevos usuarios

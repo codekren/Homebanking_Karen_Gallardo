@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" >
     <meta name="viewport" content="width=device-width, initial-scale=1.0" >
-    <title>Your accounts</title>
+    <title>Your transfers</title>
     <link rel="icon" href="../images/4.png" type="image/x-icon" >
     <link rel="stylesheet" type="text/css" href="../css/styleTransfers.css" >
     <link
@@ -38,8 +38,9 @@
             <div class="navbar-nav text-center">
               <a class="nav-link" href="../index.html"><i class="bi bi-bank2"></i> HOME</a>
               <a class="nav-link" href="./accounts.html"><i class="bi bi-wallet-fill"></i> ACCOUNTS</a>
-              <a class="nav-link" href="./cards.html"><i class="bi bi-credit-card-2-back-fill"></i> CARDS</a>
-              <a class="nav-link active text-decoration-underline" aria-current="page" href="#"><i class="bi bi-credit-card-2-back-fill"></i> TRANSACTIONS</a>
+              <a class="nav-link active text-decoration-underline" aria-current="page" href="#"><i class="bi bi-credit-card-2-back-fill"></i> TRANSFERS</a>
+              <a class="nav-link" href="./cards.html"><i class="bi bi-credit-card-2-back-fill"></i> CARDS</a>              
+              <a class="nav-link" href="./loan-application.html"><i class="bi bi-coin"></i> LOANS</a>
               <a class="nav-link" href=""><i class="bi bi-info-square-fill"></i> US</a>            
              
             </div>
@@ -87,7 +88,7 @@
                 </div> 
             <label> Amount</label>  
             <label>
-                <input class="input" type="amount" placeholder="" required="" v-model="amount">
+                <input class="input" type="number" placeholder="" required="" v-model="amount">
                 <span><i class="bi bi-currency-dollar"></i> Amount</span>
             </label>
             <label>

@@ -36,37 +36,27 @@ main{
 
 
 footer{
-    min-height: 20vh;
+    min-height: 15vh;
     background: linear-gradient(70deg, black, rgb(114, 112, 113));
     -webkit-text-fill-color: aliceblue;
 }
 
 .imgfooter{
-    height: 8vh;
+    height: 7vh;
 } 
 
 
 .imgCarrousel{
-    height: 100vh;
+    height: 70vh;
     object-fit: cover;
-    background-position: top;
+    object-position:center;
+    
 }
 
 .sizeCarrousel{
-    min-height: 50vh;
+    height: 70vh;
 }
 
-
-
-/* body {
-  font-family: 'Quicksand', sans-serif;
-  font-size: 22px;
-  letter-spacing: 1px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 90vh;
-} */
 
 .phone {
   background-color: #ddd;

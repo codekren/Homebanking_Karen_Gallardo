@@ -6,6 +6,10 @@ import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.services.AccountService;
+import com.mindhub.homebanking.services.ClientService;
+import com.mindhub.homebanking.services.implement.AccountServiceImpl;
+import org.apache.coyote.Response;
 import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,77 +26,114 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.mindhub.homebanking.utils.AccountUtils.getRandomVINNumber;
+
 @RestController
 @RequestMapping("/api")
 public class AccountController {
-    @Autowired
-    private AccountRepository accountRepository;
-    @Autowired
-    private ClientRepository clientRepository;
 
-    @RequestMapping("/accounts")
-    public List<AccountDTO> getAllAccounts(){
-        List<Account>accounts=accountRepository.findAll();
-        Stream<Account> accountStream=accounts.stream();
-        Stream<AccountDTO>accountDTOStream=accountStream.map(account->new AccountDTO(account));
+    @Autowired
+    private AccountService accountService;
+    @Autowired
+    private ClientService clientService;
 
-        List<AccountDTO>accountDTOS= accountDTOStream.collect(Collectors.toList());
+
+    @GetMapping("/accounts")
+    public List<AccountDTO> getAllAccounts() {
+        List<Account> accounts = accountService.findAllAccounts();
+        Stream<Account> accountStream = accounts.stream();
+        Stream<AccountDTO> accountDTOStream = accountStream.map(account -> new AccountDTO(account));
+
+        List<AccountDTO> accountDTOS = accountDTOStream.collect(Collectors.toList());
 
         return accountDTOS;
     }
-    @RequestMapping("/accounts/{id}")
-    public AccountDTO getAccount(@PathVariable Long id){
-        Optional<Account> account=accountRepository.findById(id);
 
-        AccountDTO accountDTO= account.map(acct-> new AccountDTO(acct)).orElse(null);
-        return accountDTO;
+    @GetMapping("/accounts/{id}")
+    public ResponseEntity<Object> getAccount(@PathVariable Long id,Authentication authentication) {
+        Account account = accountService.findAccountById(id);
+        Client client = clientService.findClientByEmail(authentication.getName());
+
+        if(!client.getAccount().stream().anyMatch(acc -> acc.getNumber().equals(account.getNumber()))){
+
+            return new ResponseEntity<>("Account doesnt belong to client",HttpStatus.FORBIDDEN);
+
+        }
+        if (account == null) {
+
+            return new ResponseEntity<>("Account doesn´t exist", HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(new AccountDTO(account), HttpStatus.OK);
 
     }
-    @RequestMapping(path = "/clients/current/accounts", method = RequestMethod.GET)
 
-    public List<AccountDTO> getAccounts (Authentication authentication){
+    @GetMapping("/clients/current/accounts")
+    public List<AccountDTO> getAccounts(Authentication authentication) {
 
-        Client client = clientRepository.findByEmail(authentication.getName());
-        List <AccountDTO> accountsClient = client.getAccount().stream().map(account->
+        Client client = clientService.findClientByEmail(authentication.getName());
+        List<AccountDTO> accountsClient = client.getAccount().stream().map(account ->
                 new AccountDTO(account)).collect(Collectors.toList());
         return accountsClient;
     }
-    @RequestMapping(path = "/clients/current/accounts", method = RequestMethod.POST)
 
-    public ResponseEntity<Object> createAccount(Authentication authentication ) {
+    @PostMapping("/clients/current/accounts")
+    public ResponseEntity<Object> createAccount(Authentication authentication) {
 
 
-        Client client = clientRepository.findByEmail(authentication.getName());
+        Client client = clientService.findClientByEmail(authentication.getName());
 
-        if (client == null){
-            throw new UsernameNotFoundException("User not register " + authentication.getName());
-        }
-        if (client.getAccount().size()==3){
+        if (client.getAccount().size() == 3) {
             return new ResponseEntity<>("Not permission", HttpStatus.FORBIDDEN);
 
-        }
-        else {
-            Account account= new Account(getRandomVINNumber(),0.0, LocalDate.now());
+        } else {
+
+            Account account = new Account(getRandomVINNumber(accountService), 0.0,
+                    LocalDate.now(),0,true);
 
             client.addAccount(account);
-            accountRepository.save(account);
+            accountService.saveAccount(account);
         }
 
 
         return new ResponseEntity<>("Created successfully", HttpStatus.CREATED);
     }
-    public String getRandomVINNumber() {
-            Random random = new Random();
-            int randomNum;
-            String vinNumber;
 
-        do {
-            randomNum = random.nextInt(90000000) + 10000000;
-            vinNumber = "VIN-" + String.format("%08d", randomNum);
-        } while (accountRepository.findByNumber(vinNumber) !=null);
-        return vinNumber;
-    }
+        @PostMapping("/clients/current/accounts/delete")
+        public ResponseEntity<Object> deleteAccount(Authentication authentication, @RequestParam Long id){
 
+            Client client = clientService.findClientByEmail(authentication.getName());
+            Account account = accountService.findAccountById(id);
 
+            if(account == null){
+                return new ResponseEntity<>("This account doesn´t exist",HttpStatus.FORBIDDEN);
+            }
+
+            if( account.getBalance() !=0){
+                return new ResponseEntity<>("Amount must be 0",HttpStatus.BAD_REQUEST);
+
+            }
+
+            if(!account.isActive()){
+                return new ResponseEntity<>("This account it´s not active",HttpStatus.BAD_REQUEST);
+
+            }
+
+            if(!(account.getClient().equals(client))){
+                return new ResponseEntity<>("It´s not possible this account no belong client",
+                        HttpStatus.BAD_REQUEST);
+
+            }
+            account.setActive(false);
+            accountService.saveAccount(account);
+
+            return new ResponseEntity<>("This account has been removed",
+                    HttpStatus.OK);
+        }
 
 }
+
+
+
+
+

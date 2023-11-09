@@ -6,70 +6,114 @@ const { createApp } = Vue
         email:"",
         password:"",
         infoLogin:"",
-        errorMessage:"",
-        customErrorMessage: "",
         showLogin: true,
         name: "",
         lastName:"",
-        infoRegister:""
+        infoRegister:"",
+        errorEmail:false,
       }
     },
     created(){  
     },
     methods:{
         login() {
+            this.errorEmail = !this.validateEmail(this.email);
             this.infoLogin = `email=${this.email}&password=${this.password}`;
-    
+
             axios.post('/api/login', this.infoLogin)
               .then(response => {
                 console.log("Successful request", response.data);
                 Swal.fire({
-                  position: 'top-end',
+                  position: 'center',
                   icon: 'success',
                   title: 'Welcome',
                   showConfirmButton: false,
-                  timer: 1500
+                  timer: 2000
                 })
                 setTimeout(()=> {
-                  window.location.href = '/web/pages/accounts.html';
+                  location.href = '/web/pages/accounts.html';
                 },3000);
-
 
               })
               .catch(err => {
                 console.log(err);
-                this.errorMessage = "Invalid credentials. Please check your username and password and try again.";
-                setTimeout(() => {
-                    this.errorMessage = "";
-                  }, 5000);
+                if (this.email = "" || this.password === "") {
+                  Swal.fire({
+                      icon: "error",
+                      title: "Error...",
+                      text: "Fill in all fields",
+                      color: "#fff",
+                      background: "#1c2754",
+                      confirmButtonColor: "#17acc9",
+                  });
+              } else {
+                  Swal.fire({
+                      icon: "error",
+                      title: "Invalid user",
+                      text: "This user is not registered",
+                      color: "#fff",
+                      background: "#1c2754",
+                      confirmButtonColor: "#17acc9"
+                  });
+                }
+                
+               
             })
             .finally(() => {
                 this.email = "";
                 this.password = "";
             });
         },
+        validateEmail(email){
+          const mailOk = /\S+@\S+\.\S+/
+          return mailOk.test(email) 
+
+        },
         
         toggleView() {
           this.showLogin = !this.showLogin;
         },
         register(){
-
+          this.errorEmail = !this.validateEmail(this.email);
           this.infoRegister = `name=${this.name}&lastName=${this.lastName}&email=${this.email}&password=${this.password}`;
-
+          console.log(this.infoRegister);
           axios.post('/api/clients',this.infoRegister)
           .then(response => {
-            this.errorMessage = "Successful register"
+           
             console.log('registered')
-            setTimeout(() => {
-              window.location.href='/web/pages/accounts.html';
-            }, 3000);
+            
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Your register was successful',
+              showConfirmButton: false,
+              timer:1800
+            })
+            console.log(this.login());
+        
+
           })
           .catch(err => {
             console.log(err)
-            this.errorMessage = "Registration failed. Please check the provided information and try again.";
-              setTimeout(() => {
-                  this.errorMessage = "";
-                }, 5000);
+            if (this.email = "" || this.password === "") {
+              Swal.fire({
+                  icon: "error",
+                  title: "Error...",
+                  text: "Fill in all fields",
+                  color: "#fff",
+                  background: "#1c2754",
+                  confirmButtonColor: "#17acc9",
+              });
+          } else {
+              Swal.fire({
+                  icon: "error",
+                  title: "Invalid user",
+                  text: "This user is not registered",
+                  color: "#fff",
+                  background: "#1c2754",
+                  confirmButtonColor: "#17acc9"
+              });
+            }
           })
           .finally(() => {
             this.email = "";

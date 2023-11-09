@@ -6,6 +6,8 @@ createApp({
       dataClient:{},
       cardDebits:[],
       cardCredits:[],
+      currentDate: new Date(),
+      cardId:0,
       
     }
   },
@@ -32,6 +34,32 @@ createApp({
   formatDate(date) {
     return new Date(date).toLocaleString('en-US', { month: '2-digit', year: '2-digit' });
     },
+  
+  toCreateCard(){
+    
+      location.href = "./create-cards.html";
+
+  },
+  deleteCard(){
+    axios.post('/api/clients/current/cards/delete',this.cardId)
+    .then(response=>{
+      console.log("deleted")
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Your has delete account!',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      setTimeout(()=> {
+        location.reload();
+      },1500);
+    
+      
+    })
+    .catch(err=> console.log("err"))
+
+  },
 
   logOut(){
       axios.post('/api/logout')
@@ -49,6 +77,12 @@ createApp({
         window.location.pathname = '/web/index.html';
       })
       .catch(err=>console.log("error"))
+     },
+    
+     deleteCard(){
+      axios.put("/api/clients/current/cards", this.cardId)
+
+
      }
   }
 }).mount('#app')

@@ -19,6 +19,7 @@ public class Card {
     private String cvv;
     private LocalDate fromDate;
     private LocalDate thruDate;
+    private boolean active;
     @Enumerated(EnumType.STRING)
     private CardType type;
     @Enumerated(EnumType.STRING)
@@ -31,7 +32,7 @@ public class Card {
     }
 
     public Card(String cardHolder, String number, String cvv, LocalDate fromDate,
-                LocalDate thruDate, CardType type, CardColor color) {
+                LocalDate thruDate, CardType type, CardColor color,boolean active) {
         this.cardHolder = cardHolder;
         this.number = number;
         this.cvv = cvv;
@@ -39,6 +40,7 @@ public class Card {
         this.thruDate = thruDate;
         this.type = type;
         this.color = color;
+        this.active = active;
     }
 
     public Long getId() {
@@ -68,6 +70,14 @@ public class Card {
 
     public void setCvv(String cvv) {
         this.cvv = cvv;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public LocalDate getFromDate() {

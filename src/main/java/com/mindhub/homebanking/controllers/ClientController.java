@@ -5,6 +5,8 @@ import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.services.AccountService;
+import com.mindhub.homebanking.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,21 +20,27 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.mindhub.homebanking.utils.AccountUtils.getRandomVINNumber;
+
 @RestController
 @RequestMapping("/api") //ruta base del controlador
 public class ClientController {
-    @Autowired // inyección de dependencias de springboot(contexto)
-    private ClientRepository clientRepository;
+
+    @Autowired
+    private ClientService clientService;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
-    private AccountController accountController;
+    private AccountService accountService;
     @Autowired
     private AccountRepository accountRepository;
+    @Autowired
+    private AccountController accountController;
 
-    @RequestMapping("/clients")
+
+    @GetMapping("/clients")
     public List<ClientDTO> getAllClients() {
-        List<Client> clients = clientRepository.findAll();
+        List<Client> clients = clientService.findAllClients();
         Stream<Client> clientStream = clients.stream();
         Stream<ClientDTO> clientDTOStream = clientStream.map(client -> new ClientDTO(client));
 
@@ -41,15 +49,21 @@ public class ClientController {
         return clientDTOS;
     }
 
-    @RequestMapping("/clients/{id}") //Servlet (anotación más método) asociamos una petición específica a una ruta
-    public ClientDTO getClient(@PathVariable Long id) {
-        Optional<Client> client = clientRepository.findById(id);
+    @GetMapping("/clients/{id}") //Servlet (anotación más método) asociamos una petición específica a una ruta
+    public ResponseEntity<Object> getClient(@PathVariable Long id) {
+        Client client = clientService.findClientById(id);
 
-        ClientDTO clientDTO = client.map(cli -> new ClientDTO(cli)).orElse(null);
-        return clientDTO;
+        if(client == null){
+
+            return new ResponseEntity<>("Dont found client", HttpStatus.BAD_REQUEST);
+
+        }
+
+        return new ResponseEntity<>(new ClientDTO(client),HttpStatus.OK );
+
 
     }
-    @RequestMapping(path = "/clients", method = RequestMethod.POST)
+    @PostMapping("/clients")
     public ResponseEntity<Object> register( // Este método maneja solicitudes Post a URL/clients
                                             //para registrar nuevos usuarios
 
@@ -75,24 +89,25 @@ public class ClientController {
         }
 
 
-        if (clientRepository.findByEmail(email) != null) {
+        if (clientService.findClientByEmail(email) != null) {
 
             return new ResponseEntity<>("Name already in use", HttpStatus.FORBIDDEN);
 
         }
 
         Client client = new Client(name, lastName, email, passwordEncoder.encode(password));
-        clientRepository.save(client);
-        Account account = new Account(accountController.getRandomVINNumber(), 0.0, LocalDate.now());
+        clientService.saveClient(client);
+        Account account =
+                new Account(getRandomVINNumber(accountService), 0.0, LocalDate.now(),0,true);
         client.addAccount(account);
-        accountRepository.save(account);
+        accountService.saveAccount(account);
 
 
         return new ResponseEntity<>("Client successfully created", HttpStatus.CREATED);
     }
-    @RequestMapping("/clients/current")
+    @GetMapping("/clients/current")
     public ClientDTO getCurrentClient(Authentication authentication){
-        Client client = clientRepository.findByEmail(authentication.getName());
+        Client client = clientService.findClientByEmail(authentication.getName());
         ClientDTO clientDTO = Optional.ofNullable(client)
                 .map(cli -> new ClientDTO(cli))
                 .orElse(null);

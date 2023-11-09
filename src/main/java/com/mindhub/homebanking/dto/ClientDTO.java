@@ -19,7 +19,7 @@ public class ClientDTO {
         name= client.getName();
         lastName=client.getLastName();
         email=client.getEmail();
-        accounts=client.getAccount().stream().map(account -> new AccountDTO(account)).collect(Collectors.toList());
+        accounts=client.getAccount().stream().filter(account-> account.isActive()).map(account -> new AccountDTO(account)).collect(Collectors.toList());
         loans=client.getLoans().stream().map(loan->new ClientLoanDTO(loan)).collect(Collectors.toList());
         cards=client.getCards().stream().map(card-> new CardDTO(card)).collect(Collectors.toList());
     }

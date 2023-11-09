@@ -18,6 +18,8 @@ public class Account {
     private String  number;
     private double balance;
     private LocalDate creationDate;
+    private double currentBalance;
+    private boolean active ;
 
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="client_id")// para indicar el nombre de la columna
@@ -27,11 +29,13 @@ public class Account {
 
     public Account() {
     }
-    public Account( String number, double balance, LocalDate creationDate) {
+    public Account( String number, double balance, LocalDate creationDate, double currentBalance, boolean active) {
 
         this.number = number;
         this.balance = balance;
         this.creationDate = creationDate;
+        this.currentBalance = currentBalance;
+        this.active = active;
     }
 
     public Long getId() {
@@ -40,6 +44,22 @@ public class Account {
 
     public String getNumber() {
         return number;
+    }
+
+    public double getCurrentBalance() {
+        return currentBalance;
+    }
+
+    public void setCurrentBalance(double currentBalance) {
+        this.currentBalance = currentBalance;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public void setNumber(String number) {

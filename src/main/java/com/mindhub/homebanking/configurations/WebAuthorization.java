@@ -14,10 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
-
-
-@EnableWebSecurity
-@Configuration
+@EnableWebSecurity // habilita la configuracion
+@Configuration // para configurar y ajustar la clase
 public class WebAuthorization extends WebSecurityConfigurerAdapter {
 
     @Override
@@ -38,7 +36,8 @@ public class WebAuthorization extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET,"/api/clients/current","/api/clients/current/cards",
                         "/api/clients/current/accounts","/api/loans").hasAuthority("CLIENT")
                 .antMatchers(HttpMethod.POST,"/api/clients/current/accounts",
-                        "/api/clients/current/cards","/api/transactions","/api/loans","/web/pages/loan-application.html").hasAuthority("CLIENT")
+                        "/api/clients/current/cards","/api/transactions","/api/loans",
+                        "/web/pages/loan-application.html","api/clients/current/cards/delete").hasAuthority("CLIENT")
                 .anyRequest().denyAll();
 
 
@@ -55,13 +54,13 @@ public class WebAuthorization extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
 
         http.headers().frameOptions().disable();
-
+        //if user is not authenticated send an auth failure response
         http.exceptionHandling().authenticationEntryPoint((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
 
         http.formLogin().successHandler((req, res, auth) -> clearAuthenticationAttributes(req));
         //que limpia los atributos de autenticación.
 
-        http.formLogin().failureHandler( //Configura un controlador de fallo de inicio de sesión que devuelve un error
+        http.formLogin().failureHandler( //Send response fallo de inicio de sesión que devuelve un error
                 (req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
 
         http.logout().logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler());

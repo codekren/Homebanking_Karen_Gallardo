@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 public class LoanApplicationDTO {
-        private Long loanId;
+    private Long loanId;
     private double amount;
     private int payments;
     private String accountDestination;

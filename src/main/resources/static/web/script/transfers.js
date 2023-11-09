@@ -50,7 +50,16 @@ createApp({
     axios.post('/api/transactions',this.transactions)
     .then(response =>{
       this.accountId = response.data
-      console.log(this.accountId)
+      
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Your transaction is successful',
+        showConfirmButton: false,
+        timer: 1500
+
+      })
+      
       window.location.href = '/web/pages/account.html?id='+this.accountId  
       this.originAccount = ""
       this.finalAccount = ""
@@ -59,11 +68,17 @@ createApp({
       this.amount = 0 
         
     } )
-    .catch(err =>{
-  
-      
-    console.log(err)}
-    )
-    },
+    .catch(err => {
+      console.log(err);
+
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'An error occurred while processing your transaction.',
+        showConfirmButton: false,
+        timer: 1800
+      });
+    });
+},
   }
 }).mount('#app')

@@ -4,6 +4,10 @@ import com.mindhub.homebanking.dto.LoanApplicationDTO;
 import com.mindhub.homebanking.dto.LoanDTO;
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.*;
+import com.mindhub.homebanking.services.AccountService;
+import com.mindhub.homebanking.services.ClientService;
+import com.mindhub.homebanking.services.LoanService;
+import com.mindhub.homebanking.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,18 +24,18 @@ import java.util.stream.Collectors;
 public class LoanController {
 
     @Autowired
-    private LoanRepository loanRepository;
+    private LoanService loanService;
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientService clientService;
     @Autowired
-    private AccountRepository accountRepository;
+    private AccountService accountService;
     @Autowired
     private ClientLoanRepository clientLoanRepository;
     @Autowired
-    private TransactionRepository transactionRepository;
-    @RequestMapping("/loans")
+    private TransactionService transactionService;
+    @GetMapping("/loans")
     public List<LoanDTO> getLoans (){
-     List<Loan> loanList = loanRepository.findAll();
+     List<Loan> loanList = loanService.findAllLoans();
         List<LoanDTO> loanDTOList =  loanList.stream().map(loan-> new LoanDTO(loan)).collect(Collectors.toList());
         return loanDTOList;
     }
@@ -39,9 +43,9 @@ public class LoanController {
     @PostMapping("/loans")
     public ResponseEntity<Object> loanCreated (@RequestBody LoanApplicationDTO loanApplicationDTO,Authentication authentication){
 
-        Client client = clientRepository.findByEmail(authentication.getName());
-        Loan loan = loanRepository.findById(loanApplicationDTO.getLoanId()).orElse(null);
-        Account account = accountRepository.findByNumber(loanApplicationDTO.getAccountDestination());
+        Client client = clientService.findClientByEmail(authentication.getName());
+        Loan loan = loanService.findLoanById(loanApplicationDTO.getLoanId());
+        Account account = accountService.findAccountByNumber(loanApplicationDTO.getAccountDestination());
         double interest = 0.2;
 
         if( loanApplicationDTO.getAmount()<=0 ){
@@ -92,16 +96,14 @@ public class LoanController {
         loan.getClients().add(clientLoan);
         clientLoanRepository.save(clientLoan);
 
-        Transaction transaction = new Transaction (loanApplicationDTO.getAmount(), loan.getName() + " loan aprroved", LocalDateTime.now(),TransactionType.CREDIT);
+        Transaction transaction = new Transaction (loanApplicationDTO.getAmount(),
+                loan.getName() + " loan aprroved", LocalDateTime.now(),TransactionType.CREDIT,0,true);
 
         account.addTransaction(transaction);
-        transactionRepository.save(transaction);
+        transactionService.saveTransaction(transaction);
 
         account.setBalance(account.getBalance() + loanApplicationDTO.getAmount());
-        accountRepository.save(account);
-
-
-
+        accountService.saveAccount(account);
 
 
         return new ResponseEntity<>("Loan created successful", HttpStatus.CREATED);

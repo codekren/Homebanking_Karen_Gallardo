@@ -35,9 +35,9 @@ main{
   background-color:rgba(245, 245, 245, 0.438);
 }
 .imgCreateCards{
-  background-image: url("../images/pexels-mikhail-nilov-7534801.jpg");
+  background-image: url("../images/pexels-karolina-grabowska-4386283.jpg");
   background-position: center;
-  object-fit: contain;
+  object-fit:cover;
   background-repeat: no-repeat;
   
 }
@@ -187,3 +187,10 @@ footer{
       opacity: 0;
     }
   }
+
+  @media  (min-width:300px) and (max-width: 768px){
+
+
+  }
+    
+  

@@ -13,6 +13,8 @@ public class AccountDTO {
     private double balance;
     private LocalDate creationDate;
 
+    private boolean active;
+
     private List<TransactionDTO> transactions;
 
 
@@ -22,7 +24,7 @@ public class AccountDTO {
             balance=account.getBalance();
             creationDate=account.getCreationDate();
             transactions=account.getTransactions().stream().map(transaction -> new TransactionDTO(transaction)).collect(Collectors.toList());
-
+            active=account.isActive();
         }
 
 
@@ -40,6 +42,10 @@ public class AccountDTO {
 
     public LocalDate getCreationDate() {
         return creationDate;
+    }
+
+    public boolean isActive() {
+        return active;
     }
 
     public List<TransactionDTO> getTransactions() {

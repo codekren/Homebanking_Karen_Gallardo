@@ -5,10 +5,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 public class LoanApplicationDTO {
-        private Long loanId;
+    private Long loanId;
     private double amount;
     private int payments;
+    private double percentage;
     private String accountDestination;
+
 
     public LoanApplicationDTO() {
 
@@ -24,6 +26,10 @@ public class LoanApplicationDTO {
 
     public int getPayments() {
         return payments;
+    }
+
+    public double getPercentage() {
+        return percentage;
     }
 
     public String getAccountDestination() {

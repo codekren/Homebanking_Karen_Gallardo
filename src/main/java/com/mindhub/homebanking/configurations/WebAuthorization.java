@@ -14,10 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
-
-
-@EnableWebSecurity
-@Configuration
+@EnableWebSecurity // habilita la configuracion
+@Configuration // para configurar y ajustar la clase
 public class WebAuthorization extends WebSecurityConfigurerAdapter {
 
     @Override
@@ -27,8 +25,10 @@ public class WebAuthorization extends WebSecurityConfigurerAdapter {
                 .antMatchers("/web/index.html","/web/pages/login.html","/web/css/**"
                         ,"/web/images/**","/web/script/index.js","/web/script/login.js").permitAll()
                 .antMatchers(HttpMethod.POST,"/api/clients","/api/login").permitAll()
-                .antMatchers("/web/pages/manager.html","/web/script/manager.js",
+                .antMatchers("/web/pages/manager.html","/web/pages/createLoan.html",
+                        "/web/script/manager.js","/web/script/createLoan.js","/web/css/createLoan.css",
                         "/h2-console/**","/rest/**").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.POST,"/api/loans/create").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.GET,"/api/accounts","/api/clients").hasAuthority("ADMIN")
                 .antMatchers("/web/pages/account.html/**","/web/pages/accounts.html",
                         "/web/pages/cards.html","/web/pages/create-cards.html","/web/pages/transfers.html"
@@ -38,7 +38,10 @@ public class WebAuthorization extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET,"/api/clients/current","/api/clients/current/cards",
                         "/api/clients/current/accounts","/api/loans").hasAuthority("CLIENT")
                 .antMatchers(HttpMethod.POST,"/api/clients/current/accounts",
-                        "/api/clients/current/cards","/api/transactions","/api/loans","/web/pages/loan-application.html").hasAuthority("CLIENT")
+                        "/api/clients/current/cards","/api/transactions","/api/loans",
+                        "/web/pages/loan-application.html",
+                        "/api/clients/current/accounts/delete").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.PATCH,"/api/clients/current/cards/delete").hasAuthority("CLIENT")
                 .anyRequest().denyAll();
 
 
@@ -55,13 +58,13 @@ public class WebAuthorization extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
 
         http.headers().frameOptions().disable();
-
+        //if user is not authenticated send an auth failure response
         http.exceptionHandling().authenticationEntryPoint((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
 
         http.formLogin().successHandler((req, res, auth) -> clearAuthenticationAttributes(req));
         //que limpia los atributos de autenticación.
 
-        http.formLogin().failureHandler( //Configura un controlador de fallo de inicio de sesión que devuelve un error
+        http.formLogin().failureHandler( //Send response fallo de inicio de sesión que devuelve un error
                 (req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
 
         http.logout().logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler());

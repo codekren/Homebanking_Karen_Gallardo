@@ -97,8 +97,8 @@ a:hover {
 .credit-card .holder-name{
     font-weight: 300;
     text-transform: capitalize;
-    letter-spacing: 2px;
-    font-size: 16px;
+    letter-spacing: 5px;
+    font-size: 25px;
 }
 .credit-card .circles{
     position: absolute;

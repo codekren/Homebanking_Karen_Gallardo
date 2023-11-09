@@ -7,6 +7,8 @@ createApp({
       parametro:null,
       idAccount:0,
       transaction:{},
+    
+      
 
     }
   },
@@ -25,8 +27,19 @@ createApp({
     logOut(){
       axios.post('/api/logout')
       .then(response => {
-        console.log('signed out!!!')
-        window.location.href = '/web/index.html';
+        console.log('signed out!!!');
+        Swal.fire({
+          position: 'center',
+          icon: 'warning',
+          title: 'Your session has been closed',
+          showConfirmButton: false,
+          timer: 2000
+        })
+        setTimeout(()=> {
+          window.location.href = '/web/index.html';
+        },2000);
+        
+
       })
       .catch(err=>console.log("error"))
      }, 
@@ -46,7 +59,38 @@ createApp({
 
         
       })
-      .catch(err=> console.log('error'))
+      .catch(err=> console.log(err))
+
   },
+  deleteAccount(){
+    console.log(this.idAccount)
+    axios.post('/api/clients/current/accounts/delete',`id=${this.idAccount}`)
+    .then(response=>{
+      console.log("deleted")
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Your has delete account!',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      setTimeout(()=> {
+        location.href = '/web/pages/accounts.html';
+      },1500);
+    
+      
+    })
+    .catch(err=> console.log("err"))
+    Swal.fire({
+      icon: "error",
+      title: "Error...",
+      text: "xx",
+      color: "#fff",
+      background: "#1c2754",
+      confirmButtonColor: "#17acc9",
+  });
+
+  },
+   
   }
 }).mount('#app')

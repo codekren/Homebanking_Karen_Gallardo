@@ -28,7 +28,9 @@
             <form class="form">
               <label for="chk" aria-hidden="true">Log in</label>
               <input class="input" type="email" name="email" placeholder="Email" required="" v-model = "email">
+              <p v-if = errorEmail  class="bg-danger text-white" style="max-height: 0.5 rem;"> "Complete correctly email" </p>
               <input class="input" type="password" name="password" placeholder="Password" required="" v-model="password">
+              
               <button @click.prevent="login" type="button">Log in</button>
             </form>
           </div>

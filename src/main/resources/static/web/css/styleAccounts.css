@@ -35,7 +35,7 @@ main{
 
 
 .imgcarrousel{
-    height: 40vh;
+    height: 30rem;
     object-fit: cover;
     object-position:center;
     
@@ -58,7 +58,7 @@ footer{
 }
 
 .card {
-    width: 350px;
+    width: 300px;
     height: 1px;
     border-radius: 30px;
     background: #df5959;
@@ -80,7 +80,7 @@ footer{
    
    .card-button {
     transform: translate(-50%, 125%);
-    width: 40%;
+    width: 45%;
     border-radius: 1rem;
     border: none;
     background-color:#05A081;

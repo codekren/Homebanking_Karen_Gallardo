@@ -9,6 +9,9 @@ public class Transaction {
     private double amount;
     private String description;
     private LocalDateTime date;
+    private double currentBalance;
+    private boolean active;
+
     @Enumerated(EnumType.STRING)
     private TransactionType type;
     @Id
@@ -23,14 +26,29 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Transaction(double amount, String description, LocalDateTime date, TransactionType type) {
+    public Transaction(double amount, String description, LocalDateTime date, TransactionType type,
+                       double currentBalance,boolean active) {
         this.amount = amount;
         this.description = description;
         this.date = date;
         this.type = type;
+        this.currentBalance = currentBalance;
+        this.active = active;
     }
     public double getAmount() {
         return amount;
+    }
+
+    public double getCurrentBalance() {
+        return currentBalance;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public void setAmount(double amount) {
@@ -62,5 +80,12 @@ public class Transaction {
 
     public Long getId() {
         return id;
+    }
+
+    public double getcurrentBalance() {
+        return currentBalance;
+    }
+    public void setCurrentBalance(double currentBalance) {
+        this.currentBalance = currentBalance;
     }
 }

@@ -20,7 +20,7 @@ a:hover {
   }
 
 .imgheader{
-    width: 15%;
+    width: 20%;
     object-fit:contain;
     object-position: center;
 }
@@ -42,3 +42,7 @@ footer{
     background: linear-gradient(70deg, black, rgb(114, 112, 113));
     -webkit-text-fill-color: aliceblue;
 }
+
+@media  (min-width:300px) and (max-width: 768px){
+    
+    }

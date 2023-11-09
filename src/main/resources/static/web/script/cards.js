@@ -6,6 +6,8 @@ createApp({
       dataClient:{},
       cardDebits:[],
       cardCredits:[],
+      currentDate: new Date(),
+     
       
     }
   },
@@ -32,6 +34,40 @@ createApp({
   formatDate(date) {
     return new Date(date).toLocaleString('en-US', { month: '2-digit', year: '2-digit' });
     },
+  
+  toCreateCard(){
+    
+      location.href = "./create-cards.html";
+
+  },
+  deleteCard(id){
+    axios.patch('/api/clients/current/cards/delete',`id=${id}`)
+    .then(response=>{
+      console.log("deleted")
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Your has delete card!',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      setTimeout(()=> {
+        location.reload();
+      },1500);
+    
+      
+    })
+    .catch(err=> console.log("err"))
+    Swal.fire({
+      icon: "error",
+      title: "Error...",
+      text: "upss something wrong happens",
+      color: "#fff",
+      background: "#1c2754",
+      confirmButtonColor: "#17acc9",
+  });
+
+  },
 
   logOut(){
       axios.post('/api/logout')
@@ -49,6 +85,8 @@ createApp({
         window.location.pathname = '/web/index.html';
       })
       .catch(err=>console.log("error"))
-     }
+     },
+    
+    
   }
 }).mount('#app')

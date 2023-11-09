@@ -16,6 +16,8 @@ public class CardDTO {
     private CardType type;
     private CardColor color;
 
+    private boolean active;
+
     public CardDTO(Card card) {
         id= card.getId();
         cardHolder=card.getCardHolder();
@@ -25,6 +27,7 @@ public class CardDTO {
         thruDate=card.getThruDate();
         type=card.getType();
         color=card.getColor();
+        active=card.isActive();
 
     }
 
@@ -58,5 +61,9 @@ public class CardDTO {
 
     public CardColor getColor() {
         return color;
+    }
+
+    public boolean isActive() {
+        return active;
     }
 }

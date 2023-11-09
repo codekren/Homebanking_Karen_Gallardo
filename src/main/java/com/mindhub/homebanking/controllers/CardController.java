@@ -1,50 +1,49 @@
 package com.mindhub.homebanking.controllers;
 
 import com.mindhub.homebanking.dto.CardDTO;
-import com.mindhub.homebanking.models.Card;
-import com.mindhub.homebanking.models.CardColor;
-import com.mindhub.homebanking.models.CardType;
-import com.mindhub.homebanking.models.Client;
+import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.CardRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.services.CardService;
+import com.mindhub.homebanking.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.mindhub.homebanking.utils.CardUtils.cardNumber;
+import static com.mindhub.homebanking.utils.CardUtils.cvvNumber;
 
 @RestController
 @RequestMapping("/api")
 public class CardController {
 
     @Autowired
-    ClientRepository clientRepository;
+    private ClientService clientService;
 
     @Autowired
-    CardRepository cardRepository;
+    private CardService cardService;
 
-    @RequestMapping("/clients/current/cards")
+    @GetMapping("/clients/current/cards")
     public List<CardDTO> cardsClient (Authentication authentication){
-        Client client = clientRepository.findByEmail(authentication.getName());
+        Client client = clientService.findClientByEmail(authentication.getName());
 
         List<CardDTO> cardDTOList = client.getCards().stream().map(card -> new CardDTO(card) ).
                 collect(Collectors.toList());
         return cardDTOList;
     }
 
-    @RequestMapping(path = "/clients/current/cards", method = RequestMethod.POST)
+    @PostMapping("/clients/current/cards")
     public ResponseEntity<Object> createCard( @RequestParam String cardColor, @RequestParam String cardType,
             Authentication authentication) {
 
-        Client client = clientRepository.findByEmail(authentication.getName());
+        Client client = clientService.findClientByEmail(authentication.getName());
 
         if (client == null){
             throw new UsernameNotFoundException("User not register " + authentication.getName());
@@ -65,37 +64,46 @@ public class CardController {
 
         }
 
+
         Card card = new Card(client.getName() +" " + client.getLastName(),cardNumber(),cvvNumber(), LocalDate.now(),
-                LocalDate.now().plusYears(5), CardType.valueOf(cardType),CardColor.valueOf(cardColor) );
+                LocalDate.now().plusYears(5), CardType.valueOf(cardType),CardColor.valueOf(cardColor),true );
 
         client.addCards(card);
-        cardRepository.save(card);
-        clientRepository.save(client);
+        cardService.saveCard(card);
+        clientService.saveClient(client);
 
         return new ResponseEntity<>("Card created",HttpStatus.CREATED);
     }
 
-    private String cvvNumber() {
-        int randomNumber = (int) (Math.random() * 1000);
-        return String.format("%03d", randomNumber);
-    }
+    @PatchMapping("/clients/current/cards/delete")
+    public ResponseEntity<Object> deleteCard( @RequestParam Long id,
+                                              Authentication authentication) {
 
-    private String card4Number() {
-        int randomNumber = (int) (Math.random() * 10000);
-        return String.format("%04d", randomNumber);
-    }
+        Client client = clientService.findClientByEmail(authentication.getName());
+        Card card = cardService.findCardById(id);
 
-    private String cardNumber(){
-        String cardNumber = "";
-        for (int i = 0; i <= 3 ; i++) {
-            cardNumber += card4Number();
-            if (i < 3){
-                cardNumber += "-";
-            }
+
+        if(card == null){
+            return new ResponseEntity<>("This card doesn´t exist",HttpStatus.FORBIDDEN);
+        }
+
+        if(!card.isActive()){
+            return new ResponseEntity<>("This card it´s not active",HttpStatus.BAD_REQUEST);
 
         }
-        return cardNumber;
+
+        if(!(card.getClient().equals(client))){
+            return new ResponseEntity<>("It´s not possible this card not belong client",
+                    HttpStatus.BAD_REQUEST);
+
+        }
+        card.setActive(false);
+        cardService.saveCard(card);
+
+        return new ResponseEntity<>("This card has been removed",
+                HttpStatus.OK);
+    }
     }
 
 
-    }
+

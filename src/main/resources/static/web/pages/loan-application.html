@@ -38,7 +38,7 @@
                         
                     <label> Amount</label>  
                     <label>
-                        <input class="input" type="number" id="amount" name="amount" v-model="amount" @input="updateListPayments">
+                        <input class="input" type="number" min="1" id="amount" name="amount" v-model="amount" @input="updateListPayments">
                         <span><i class="bi bi-currency-dollar"></i> Amount</span>
                         <span v-show="typeLoan != null"> Amount max ${{maxAmount.toLocaleString('en-US',{minimumFractionDigits: 2, maximumFractionDigits: 2})}} </span>
                         

@@ -79,16 +79,35 @@ createApp({
             axios
               .post('/api/loans', infoCreate)
               .then(() => {
-                Swal.fire('The request was made!', '', 'success');
-                this.typeLoan = null;
-                this.amount = 0;
-                this.payments = 0;
-                this.accountDestination = '';                
-                location.href = '/web/pages/accounts.html';
-              })
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Yor loan is done',
+                    showConfirmButton: false,
+                    timer: 1500
+
+                  })
+                  setTimeout(()=> {
+                    this.typeLoan = null;
+                    this.amount = 0;
+                    this.payments = 0;
+                    this.accountDestination = '';
+                    window.location.href = '/web/pages/accounts.html';
+                  },3000);
+                })
+                
               .catch((err) => {
                 console.log(err);
+                Swal.fire({
+                  position: 'top-end',
+                  icon: 'error',
+                  title: 'ERROR',
+                  showConfirmButton: false,
+                  timer: 1500
+
+                })
               });
+            
           } else if (result.isDenied) {
             Swal.fire('The request was not made.', '', 'info');
             this.typeLoan = null;
@@ -96,7 +115,9 @@ createApp({
             this.payments = 0;
             this.accountDestination = '';
           }
-        });
-      },
-    },
+        },
+)}
+}
+      
+    
 }).mount('#app')
